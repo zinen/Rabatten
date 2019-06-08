@@ -893,3 +893,4 @@ var array_logbuy = [
 ['surfogskigreve.dk','Surf og Ski Greve','22 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=18769&AddressId=161449&SupplierClickArea=SearchList&ViewType=Normal'],
 ['fribikeshop.dk','Fri BikeShop Nærum','12 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=3825&AddressId=138721&SupplierClickArea=SearchList&ViewType=Normal'],
 ];
+export { array_logbuy };
