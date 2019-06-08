@@ -1,5 +1,5 @@
 //Data from 2019-04-17
-const array_forbrugsforeningen = [
+var array_forbrugsforeningen = [
 ['stylepit.dk','Stylepit.dk','9,0 %','www.forbrugsforeningen.dk/businesssearch//1001986553'],
 ['sportyfied.com','Sportyfied','7,0 %','www.forbrugsforeningen.dk/businesssearch//1001993151'],
 ['plaza.dk','Plaza Ure & Smykker','9,0 %','www.forbrugsforeningen.dk/businesssearch//1001834508'],

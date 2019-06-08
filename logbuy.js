@@ -1,5 +1,5 @@
 //Data from 2019-04-17
-const array_logbuy = [
+var array_logbuy = [
 ['pilgrim.dk','pilgrim','15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=3667&AddressId=135553&SupplierClickArea=SearchList&ViewType=Normal'],
 ['secure.shellcard.dk','Shell','Tilbud','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=1116&AddressId=160535&SupplierClickArea=SearchList&ViewType=Normal'],
 ['billetter.flyingsuperkids.com','flying superkids','15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=19004&AddressId=161728&SupplierClickArea=SearchList&ViewType=Normal'],
