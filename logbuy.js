@@ -890,5 +890,5 @@
 ['taastruphelsekost.dk','Tåstrup Helsekost v/Dorte Holm Andersen','12 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=18039&AddressId=160009&SupplierClickArea=SearchList&ViewType=Normal'],
 ['gamefair.dk','Gamefair','10 - 15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=17401&AddressId=157792&SupplierClickArea=SearchList&ViewType=Normal'],
 ['surfogskigreve.dk','Surf og Ski Greve','22 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=18769&AddressId=161449&SupplierClickArea=SearchList&ViewType=Normal'],
-['fribikeshop.dk','Fri BikeShop Nærum','12 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=3825&AddressId=138721&SupplierClickArea=SearchList&ViewType=Normal'],
+['fribikeshop.dk','Fri BikeShop Nærum','12 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=3825&AddressId=138721&SupplierClickArea=SearchList&ViewType=Normal']
 ]
