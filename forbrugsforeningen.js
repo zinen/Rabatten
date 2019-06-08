@@ -1,5 +1,4 @@
-//Data from 2019-04-17
-var array_forbrugsforeningen = [
+[
 ['stylepit.dk','Stylepit.dk','9,0 %','www.forbrugsforeningen.dk/businesssearch//1001986553'],
 ['sportyfied.com','Sportyfied','7,0 %','www.forbrugsforeningen.dk/businesssearch//1001993151'],
 ['plaza.dk','Plaza Ure & Smykker','9,0 %','www.forbrugsforeningen.dk/businesssearch//1001834508'],
@@ -518,5 +517,5 @@ var array_forbrugsforeningen = [
 ['friluftsland.dk','Friluftsland.dk','9,0 %','www.forbrugsforeningen.dk/businesssearch//97932'],
 ['gludvin.dk','Glud Vin','12,0 %','www.forbrugsforeningen.dk/businesssearch//89319'],
 ['frandeli.dk','Frandeli.dk','9,0 %','www.forbrugsforeningen.dk/businesssearch//89021'],
-['fyringsolie.dk','YX Fyringsolie','1,6 %','www.forbrugsforeningen.dk/businesssearch//70030'],
-];
+['fyringsolie.dk','YX Fyringsolie','1,6 %','www.forbrugsforeningen.dk/businesssearch//70030']
+]
