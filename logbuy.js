@@ -1,5 +1,4 @@
-//Data from 2019-04-17
-var array_logbuy = [
+[
 ['pilgrim.dk','pilgrim','15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=3667&AddressId=135553&SupplierClickArea=SearchList&ViewType=Normal'],
 ['secure.shellcard.dk','Shell','Tilbud','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=1116&AddressId=160535&SupplierClickArea=SearchList&ViewType=Normal'],
 ['billetter.flyingsuperkids.com','flying superkids','15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=19004&AddressId=161728&SupplierClickArea=SearchList&ViewType=Normal'],
@@ -892,5 +891,4 @@ var array_logbuy = [
 ['gamefair.dk','Gamefair','10 - 15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=17401&AddressId=157792&SupplierClickArea=SearchList&ViewType=Normal'],
 ['surfogskigreve.dk','Surf og Ski Greve','22 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=18769&AddressId=161449&SupplierClickArea=SearchList&ViewType=Normal'],
 ['fribikeshop.dk','Fri BikeShop Nærum','12 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=3825&AddressId=138721&SupplierClickArea=SearchList&ViewType=Normal'],
-];
-export { array_logbuy };
+]
