@@ -2,27 +2,43 @@
   "manifest_version": 2,
   "name": "Rabet husker",
   "description": "Et hurtigt klik, og du kan se om du kan få rabat på siden",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "options_page": "options.html",
   "background": {
-      "scripts": ["background.js"],
-      "persistent": false
-    },
+    "scripts": [
+      "common.js",
+      "background.js"
+    ],
+    "persistent": false
+  },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "run_at": "document_end",
-      "js": ["logbuy.js","forbrugsforeningen.js","content.js"]
+      "js": [
+        "common.js",
+        "forbrugsforeningen.js",
+        "content.js"
+      ]
     }
   ],
+
   "browser_action": {
     "default_popup": "/popup.html"
   },
   "permissions": [
-   "activeTab", "storage","declarativeContent"
- ],
- "icons": { "16": "icon16.png",
-           "48": "icon48.png",
-          "128": "icon128.png" },
-  "web_accessible_resources": ["icon48.png"]
+    "activeTab",
+    "storage",
+    "declarativeContent"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "web_accessible_resources": [
+    "icon48.png"
+  ]
 }
