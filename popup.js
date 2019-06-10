@@ -1,72 +1,48 @@
-const debug = true;
-
-function debuglog(input){
-  if (debug){
-    console.log('Popup: log end');
-  }
-}
 debuglog('Popup: scrip is running!');
+var matchtable;
+var tabdomainname
+var currentTab
 
-
-document.addEventListener('DOMContentLoaded', function() {
-  debuglog('Popup: DOM fully loaded and parsed');
-  chrome.tabs.query({active: true,lastFocusedWindow: true}, function(tab) {
-  //chrome.tabs.getSelected(null, function(tab) {
-    let thissite = document.getElementById('thissite');
-    let thisdiscount = document.getElementById('thisdiscount');
-
-    //debuglog("Popup: full URL: "+tab[0].url)
-    debuglog(tab[0])
-
-
-    let tabdomainname=tab[0].url.replace(/^\w+:?\/\/w?w?w?\.?([^\/]+)\/?.*$/,'$1').split(".").slice(-2).join(".");
-
-    debuglog("Popup: domain name: "+tabdomainname)
-    
-    let matchtable;
-
-    chrome.storage.sync.get('memberships', function(items) {
-      for (i=0; i<items.memberships.length; i++) {
-        if (items.memberships[i]=="logbuy"){
-          debuglog("Popup: Logbuy activated");
-          for(let item of array_logbuy){
-            if (item[0]==tabdomainname){
-              debuglog("Popup: Logbuy match found: "+tabdomainname);
-              matchtable = item;
-              break;
-            }
-          }
-        }else if (items.memberships[i]=="forbrugsforeningen" && !matchtable) {
-          debuglog("Popup: Forbrugsforeningen activated")
-          for(let item of array_forbrugsforeningen){
-            if (item[0]==tabdomainname){
-              debuglog("Popup: Forbrugsforeningen match found: "+tabdomainname);
-              matchtable = item;
-              break;
-            }
-          }
-        }
-      }
-
-      if (matchtable){
-        //debuglog("Match: "+matchtable[0])
-        chrome.browserAction.setBadgeText({ text: "!", tabId: tab[0].id})
-        //chrome.browserAction.setIcon({path: tab[0].favIconUrl , tabId: tab[0].id})
-        thissite.innerHTML = matchtable[1]
-        thisdiscount.innerHTML = matchtable[2];
-        let newA = document.createElement("h3");
-        let link = 'http://' + matchtable[3]
-        newA.innerHTML = '<a href="' + link + '">[link]</a>'
-        thisdiscount.append(newA);
-
-      }else{
-        chrome.browserAction.setBadgeText({ text: "" , tabId: tab[0].id})
-        thissite.innerHTML = "No match on this site";
-        thisdiscount.innerHTML = "Please report if this is wrong";
-      }
+document.addEventListener('DOMContentLoaded', function () {
+  debuglog('DOM fully loaded and parsed');
+  chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
+    chrome.runtime.sendMessage({ getmatch: true, tab: tab[0].id }, function (response) {
+      matchtable = response
+      debuglog("Received matchtable:")
+      debuglog(matchtable);
+      fillPopup()
     });
   });
 }, false);
+
+function popuplatePopup(shop, discount, link) {
+  let elements = document.body.getElementsByTagName("h2")
+  // Element are already populated, then create a line object
+  if (elements.length > 0) {
+    document.body.appendChild(document.createElement("hr"));
+  }
+  let h2 = document.createElement("h2")
+  h2.innerText = shop;
+  let h3 = document.createElement("h3")
+  h3.innerHTML = discount + ' <a href="http://' + link + '">[link]</a>'
+  h2.append(h3);
+  document.body.appendChild(h2);
+  //Add lister to redirect tab page on click in popup window
+  h3.getElementsByTagName("a")[0].addEventListener("mouseup", function () {
+    chrome.tabs.update({ url: "http://" + link });
+  });
+}
+
+function fillPopup() {
+  debuglog("Populates popup now")
+  if (matchtable) {
+    for (let item of matchtable) {
+      //popuplatePopup(item.shop, item.discount, item.link);
+      popuplatePopup(item[1], item[2], item[3]);
+    }
+  } else {
+    popuplatePopup("No match on this site", "Please report if this is wrong", "report.com");
+  }
+}
+
 debuglog('Popup: scrip end.');
-//Part of code from here:
-//https://www.sitepoint.com/create-chrome-extension-10-minutes-flat/
