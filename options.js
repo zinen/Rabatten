@@ -1,19 +1,12 @@
-console.log('Options: scrip is running!');
-const discount_service = {
-  //name, link to homepage
-  'logbuy': 'logbuy.com',
-  'forbrugsforeningen': 'forbrugsforeningen.dk',
-};
-
-//https://www.forbrugsforeningen.dk/static/img/logo.png
+debuglog('Options: scrip is running!');
 
 function createForm() {
-  chrome.storage.sync.get(['memberships'], function(list) {
+  chrome.storage.sync.get(['memberships'], function (list) {
     let keeps = list.memberships || [];
     let form = document.getElementById('form');
-    for (let key of Object.keys(discount_service)) {
+    for (let key of Object.keys(DiscountServices)) {
       let newlabel = document.createElement('label');
-      newlabel.innerText = discount_service[key];
+      newlabel.innerText = key;
       let checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       newlabel.className = 'container';
@@ -22,15 +15,12 @@ function createForm() {
         checkbox.checked = true;
       }
       checkbox.name = key;
-      checkbox.value = discount_service[key];
-
+      checkbox.value = key;
       let newa = document.createElement('a');
-      newa.href = "http://" + discount_service[key]
+      newa.href = DiscountServices[key][0].homepage
       newa.innerText = "[link]"
-
       let newspan = document.createElement('span');
       newspan.className = 'checkmark';
-
       newlabel.appendChild(checkbox);
       newlabel.appendChild(newspan);
       form.appendChild(newlabel);
@@ -44,17 +34,16 @@ function createForm() {
 createForm();
 
 //Save the options on click
-document.getElementById('optionsSubmit').onclick = function() {
+document.getElementById('optionsSubmit').onclick = function () {
   let checkboxes = document.getElementsByTagName('input');
   let services = [];
   //Loop through all checked checkboxes
-  for (i=0; i<checkboxes.length; i++) {
+  for (i = 0; i < checkboxes.length; i++) {
     if (checkboxes[i].checked == true) {
       services.push(checkboxes[i].name);
     }
   }
-  console.log(services)
-  chrome.storage.sync.set({memberships: services});
+  chrome.storage.sync.set({ memberships: services });
   window.close();
 }
-console.log('Options: scrip end.');
+debuglog('Options: scrip end.');

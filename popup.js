@@ -8,8 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
     chrome.runtime.sendMessage({ getmatch: true, tab: tab[0].id }, function (response) {
       matchtable = response
-      debuglog("Received matchtable:")
-      debuglog(matchtable);
+      debuglog("Received matchtable:", matchtable)
+      debuglog("tab[0]:")
+      debuglog(tab[0])
+      //debuglog(matchtable);
       fillPopup()
     });
   });
@@ -23,13 +25,17 @@ function popuplatePopup(shop, discount, link) {
   }
   let h2 = document.createElement("h2")
   h2.innerText = shop;
+  document.body.appendChild(h2);
   let h3 = document.createElement("h3")
   h3.innerHTML = discount + ' <a href="http://' + link + '">[link]</a>'
   h2.append(h3);
-  document.body.appendChild(h2);
   //Add lister to redirect tab page on click in popup window
-  h3.getElementsByTagName("a")[0].addEventListener("mouseup", function () {
-    chrome.tabs.update({ url: "http://" + link });
+  h3.getElementsByTagName("a")[0].addEventListener("mouseup", function (e) {
+    //Only update url if left mouse button was pressed. This means that middel click
+    // will open the url in a new tab if wanted, and not do the normal url update
+    if (e.which == 1) {
+      chrome.tabs.update({ url: "http://" + link });
+    }
   });
 }
 
@@ -41,7 +47,7 @@ function fillPopup() {
       popuplatePopup(item[1], item[2], item[3]);
     }
   } else {
-    popuplatePopup("No match on this site", "Please report if this is wrong", "report.com");
+    popuplatePopup("No match on this site", "Please report if this is wrong", "github.com/zinen/Rabatten/issues");
   }
 }
 

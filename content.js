@@ -1,10 +1,6 @@
 debuglog("Content: script is running!");
 var ignoredomain
-//var matchtable;
 var matchHolder = [];
-
-
-
 
 let tabdomainname = document.location.href.replace(/^\w+:?\/\/w?w?w?\.?([^\/]+)\/?.*$/, '$1').split(".").slice(-2).join(".");
 debuglog("Content: domain name: " + tabdomainname)
@@ -18,12 +14,6 @@ try {
 } catch (eer) {
   //
 }
-/*
-chrome.storage.sync.get('memberships', function (membershipsarray) {
-  for (let membership of membershipsarray.memberships) {
-    loopDiscounts(membership)
-  }
-});*/
 
 chrome.storage.sync.get('memberships', function (membershipsarray) {
   loopDiscounts(membershipsarray).then(function (result) {
@@ -38,19 +28,6 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
   })
 
 });
-
-
-function MatchObject(input) {
-  //constructor(input) {
-  this.domain = input[0];
-  this.shop = input[1];
-  this.discount = input[2];
-  this.link = '//' + input[3];
-  this.service = input[4];
-  //console.log(this);
-  //return this;
-  //}
-}
 
 function loopDiscounts(membershipsarray) {
   return new Promise(function (resolve, reject) {
@@ -75,35 +52,6 @@ function loopDiscounts(membershipsarray) {
   })
 };
 
-/*
-function loopDiscounts_backup(inService) {
-  let arrayName = DiscountServices[inService][0].arrayName
-  chrome.storage.local.get([arrayName], function (list) {
-    let matchtable
-    for (let item of list[[arrayName]]) {
-      if (item[0] == tabdomainname) {
-        matchtable = item;
-        matchtable.push(inService);//Add the name of the service that had a match to the table
-
-        item.push(inService)
-        matchHolder.push(new matchObject(item))
-        
-
-        //matchFound()
-        //break;
-      }
-    }
-    if (matchtable) {
-      debuglog("Content: " + inService + " match found: " + tabdomainname);
-      //if (matchHolder.length>0) {
-      console.log(matchHolder)
-
-      matchFound(matchtable)
-    }
-  })
-};
-*/
-
 function makeTopPane() {
   debuglog("Content: matchholder info used");
   let shop, discount, link, service
@@ -122,7 +70,7 @@ function makeTopPane() {
   } else {
     shop = matchHolder[0][1]
     discount = matchHolder[0][2]
-    link = matchHolder[0][3] //Link to open popup
+    link = matchHolder[0][3] //Link for popup
     service = matchHolder[0][4] //Matching servoce
   }
 
@@ -137,10 +85,10 @@ function makeTopPane() {
       '         <button id="aso12910" style="color:red!important;font-size:20px;font-family:verdana;height: 30px;">Close[x]</button>' +
       '</font>\n' +
       '</div>\n'
-      if (matchHolder.length > 1) {
-        //Delete link in the new dir, if multible discounts found
-        newdiv.getElementsByTagName("a")[0].remove()
-      }
+    if (matchHolder.length > 1) {
+      //Delete link in the new dir, if multible discounts found
+      newdiv.getElementsByTagName("a")[0].remove()
+    }
     //Append div as the first child of body
     document.body.insertBefore(newdiv, document.body.firstChild);
     //Make close button function

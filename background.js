@@ -30,11 +30,10 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     //Used to receive message from content
     debuglog("Badge text set!");
     chrome.browserAction.setBadgeText({ text: "!", tabId: sender.tab.id });
-    if (Object.keys(matchtabels).length > 6) {
+    if (Object.keys(matchtabels).length > 10) {
       let firstObject = Object.keys(matchtabels)[0]
       delete matchtabels[firstObject]
     }
-    //matchtabels[sender.tab.id] = message.matchtable;
     matchtabels[sender.tab.id] = message.matchHolder;
 
   } else if (message.getmatch) {
@@ -74,52 +73,5 @@ function setDiscounts() {
     }
   }
 }
-var textHolder = []
-
-for (let service in DiscountServices) {
-  getDiscounts(service)
-}
-
-
-function getDiscounts2(inService) {
-  let request = new XMLHttpRequest();
-  request.onload = setDiscounts2;
-  request.open("get", DiscountServices[inService][0].databaseURL, true);
-  request.send();
-  //debuglog("Yo!")
-}
-
-function setDiscounts2() {
-  //debuglog("Yiha!")
-  if (this.status == 200) {
-    //replace singel quotes with double quotes
-    let text = this.responseText.replace(/'/g, "\"")
-    text = JSON.parse(text)
-    console.log(text)
-    textHolder.push(text)
-
-  }
-  if (textHolder.length==2){
-    let matchMatch = [];
-    console.log(textHolder)
-    for(item1 of textHolder[0]){
-      for(item2 of textHolder[1]){
-        console.log(item2[0]+"="+item1[0])
-        if( item1[0] == item2[0])
-        matchMatch.push(item2[0])
-      }
-
-    }
-    if (matchMatch.length>0){
-      console.log("Multible set found")
-      console.log(matchMatch)
-    }else{
-      console.log("Not match-match")
-    }
-
-  }
-}
-
-
 
 debuglog('Background: scrip end.');

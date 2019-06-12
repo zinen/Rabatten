@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Indstillinger</title>
-    <style>
+
+<head>
+  <title>Indstillinger</title>
+  <style>
     body {
       min-width: 300px;
       font-size: 16px;
       font-family: Verdana;
       align-items: center;
     }
+
     /*input {
       margin: 5px;
       outline: none;
@@ -23,6 +25,7 @@
       font-size: 18px;
       user-select: none;
     }
+
     /*a {
       display: inline-block;
       position: relative;
@@ -50,17 +53,18 @@
     }
 
     /* Unchecked: On mouse-over, add a grey background color */
-    .container:hover input ~ .checkmark {
+    .container:hover input~.checkmark {
       background-color: #999999;
     }
 
     /* When the checkbox is checked, add a blue background */
-    .container input:checked ~ .checkmark {
+    .container input:checked~.checkmark {
       background-color: #2196F3;
     }
-    
+
     /* Checked: On mouse-over, add a grey background color */
-    .container:hover input:checked ~ .checkmark, button:hover {
+    .container:hover input:checked~.checkmark,
+    button:hover {
       background-color: #083050;
     }
 
@@ -72,7 +76,7 @@
     }
 
     /* Show the checkmark when checked */
-    .container input:checked ~ .checkmark:after {
+    .container input:checked~.checkmark:after {
       display: block;
     }
 
@@ -86,27 +90,38 @@
       border-width: 0 3px 3px 0;
       transform: rotate(40deg);
     }
+
     button {
-      background-color: #2196F3; /* Green background */
-      color: white; /* White text */
-      padding: 10px 24px; /* Some padding */
-      cursor: pointer; /* Pointer/hand icon */
-      float: left; /* Float the buttons side by side */
+      background-color: #2196F3;
+      /* Green background */
+      color: white;
+      /* White text */
+      padding: 10px 24px;
+      /* Some padding */
+      cursor: pointer;
+      /* Pointer/hand icon */
+      float: left;
+      /* Float the buttons side by side */
     }
+
     button:not(:last-child) {
       border: 0mm;
     }
-    </style>
-  </head>
-  <body>
-      <h2>
-    <img src="icon48.png" alt="" style="margin-left:0px; margin-top:0px; width:40px; height:40px; vertical-align:sub;" />
+  </style>
+</head>
+
+<body>
+  <h2>
+    <img src="icon48.png" alt=""
+      style="margin-left:0px; margin-top:0px; width:40px; height:40px; vertical-align:sub;" />
     Rabatten indstillinger</h2>
-    <h3>V&aelig;lg medlemskaber</h3>
-    <form id="form">
-    </form>
-    <br/>
-    <button type='submit' id='optionsSubmit'>Gem valg</button>
-  </body>
-  <script src="options.js"></script>
+  <h3>V&aelig;lg medlemskaber</h3>
+  <form id="form">
+  </form>
+  <br />
+  <button type='submit' id='optionsSubmit'>Gem valg</button>
+</body>
+<script src="common.js"></script>
+<script src="options.js"></script>
+
 </html>
