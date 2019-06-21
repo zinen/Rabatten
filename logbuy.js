@@ -910,4 +910,4 @@
 ['braestrup.nu','Glarmester BRAESTRUP ApS','15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=17573&AddressId=159580&SupplierClickArea=SearchList&ViewType=Normal'],
 ['upstairs-roskilde.dk','Restaurant Upstairs','10 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=17217&AddressId=143860&SupplierClickArea=SearchList&ViewType=Normal'],
 ['fribikeshop.dk','Fri BikeShop Roskilde','12 - 15 %','www.mylogbuy.com/WebPages/ShowDeal/default.aspx?SupplierInfoId=15880&AddressId=141104&SupplierClickArea=SearchList&ViewType=Normal']
-];
+]
