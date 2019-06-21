@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Rabatten",
-  "description": "Rabat huserk, et hurtigt klik og du kan se om du kan få rabat på siden",
-  "version": "0.0.7",
+  "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden",
+  "version": "0.0.8",
   "options_page": "options.html",
   "background": {
     "scripts": [

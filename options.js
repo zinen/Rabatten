@@ -1,17 +1,17 @@
 debuglog('Options: scrip is running!');
 
 function createForm() {
-  chrome.storage.sync.get(['memberships'], function (list) {
-    let keeps = list.memberships || [];
+  chrome.storage.sync.get('memberships', function (arraylist) {
+    let list = arraylist.memberships || [];
     let form = document.getElementById('form');
-    for (let key of Object.keys(DiscountServices)) {
+    for (let key in DiscountServices) {
       let newlabel = document.createElement('label');
       newlabel.innerText = key;
       let checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       newlabel.className = 'container';
-      checkbox.checked = false;//temp set to true, should be false
-      if (keeps.includes(key)) {
+      checkbox.checked = false;
+      if (list.includes(key)) {
         checkbox.checked = true;
       }
       checkbox.name = key;
@@ -44,6 +44,7 @@ document.getElementById('optionsSubmit').onclick = function () {
     }
   }
   chrome.storage.sync.set({ memberships: services });
+  chrome.runtime.sendMessage({ getDiscounts: true });
   window.close();
 }
 debuglog('Options: scrip end.');
