@@ -1,80 +1,74 @@
 debuglog("Content: script is running!");
-var ignoredomain
-var matchHolder = [];
+let ignoredomain
 
-let tabdomainname = document.location.href.replace(/^\w+:?\/\/w?w?w?\.?([^\/]+)\/?.*$/, '$1').split(".").slice(-2).join(".");
+let tabdomainname = document.domain.split(".").slice(-2).join(".");
+
 debuglog("Content: domain name: " + tabdomainname)
 
-//Get last URL, from witch this discount banner was closed on, and store it
+//Get last URL, from which this discount banner was closed on, and store it
 try {
-  chrome.storage.local.get(['rabat_closed'], function (result) {
-    ignoredomain = result.rabat_closed;
+  chrome.storage.local.get('rabat_closed', function (result) {
+    ignoredomain = [result.rabat_closed, "facebook.com", "google.com"];
     debuglog("Content: Ignore domain: " + ignoredomain);
   });
 } catch (eer) {
-  //
+  console.error(err)
 }
 
 chrome.storage.sync.get('memberships', function (membershipsarray) {
-  loopDiscounts(membershipsarray).then(function (result) {
-    //makeTopPane()
-    if (result.length > 0) {
-      //Notify the background script of a match
-      chrome.runtime.sendMessage({ rabatmatch: true, matchHolder: matchHolder });
-      makeTopPane();
-    }
-  }, function (error) {
-    console.error("Failed!", error);
-  })
-
-});
-
-function loopDiscounts(membershipsarray) {
-  return new Promise(function (resolve, reject) {
-    let templength = membershipsarray.memberships.length
-    for (let membership of membershipsarray.memberships) {
-
+  const promises = []
+  //Loop membership and note them in a promise
+  for (let membership of membershipsarray.memberships) {
+    promises.push(new Promise(resolve => {
+      setTimeout(resolve, 2000)
       let arrayName = DiscountServices[membership][0].arrayName
       chrome.storage.local.get([arrayName], function (list) {
-        //let matchtable
+        const holder = Array()
         for (let item of list[[arrayName]]) {
           if (item[0] == tabdomainname) {
             item.push(membership)
-            matchHolder.push(item)
+            holder.push(item)
           }
         }
-        templength--
-        if (!templength) {
-          resolve(matchHolder);
-        }
+        resolve(holder)
       })
-    }
-  })
-};
-
-function makeTopPane() {
-  debuglog("Content: matchholder info used");
-  let shop, discount, link, service
-  if (matchHolder.length > 1) {
-    shop = "Flere"
-    discount = "tilbud"
-    //Look i more then one service has discount on the page
-    for (i = 0; i < matchHolder.length - 1; i++) {
-      if (matchHolder[i][4] != matchHolder[i + 1][4]) {
-        service = "flere udbydere"
-        break;
-      } else {
-        service = matchHolder[i][4]
-      }
-    }
-  } else {
-    shop = matchHolder[0][1]
-    discount = matchHolder[0][2]
-    link = matchHolder[0][3] //Link for popup
-    service = matchHolder[0][4] //Matching servoce
+    }))
   }
+  Promise.all(promises).then(function (matches) {
+    //Flatten returned array from promises
+    matches = matches.reduce((flatten, arr) => [...flatten, ...arr])
+    if (matches.length > 0) {
+      //Notify the background script of a match
+      chrome.runtime.sendMessage({ rabatmatch: true, matchHolder: matches });
+      makeTopPane(matches);
+    }
+  }, function (err) {
+    console.error(err);
+  })
+});
 
-  if (tabdomainname != ignoredomain) {
+function makeTopPane(matchHolder) {
+  if (!ignoredomain.includes(tabdomainname)) {
+    debuglog("Content: matchholder info used");
+    let shop, discount, link, service
+    if (matchHolder.length > 1) {
+      shop = "Flere"
+      discount = "tilbud"
+      //Look if more then one service has discount on the page
+      for (i = 0; i < matchHolder.length - 1; i++) {
+        if (matchHolder[i][4] != matchHolder[i + 1][4]) {
+          service = "flere udbydere"
+          break;
+        } else {
+          service = matchHolder[i][4]
+        }
+      }
+    } else {
+      shop = matchHolder[0][1]
+      discount = matchHolder[0][2]
+      link = matchHolder[0][3] //Link for popup
+      service = matchHolder[0][4] //Matching servoce
+    }
     let newdiv = document.createElement("div");
     newdiv.style = "all: initial;display:block;height:30px";
     newdiv.innerHTML =
