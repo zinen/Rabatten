@@ -1,18 +1,12 @@
 debuglog('Popup: scrip is running!');
-var matchtable;
-var tabdomainname
-var currentTab
 
 document.addEventListener('DOMContentLoaded', function () {
   debuglog('DOM fully loaded and parsed');
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
-    chrome.runtime.sendMessage({ getmatch: true, tab: tab[0].id }, function (response) {
-      matchtable = response
-      debuglog("Received matchtable:", matchtable)
-      debuglog("tab[0]:")
-      debuglog(tab[0])
-      //debuglog(matchtable);
-      fillPopup()
+    chrome.storage.local.get("matchHolder", function (content) {
+      //Get data, of any from local storage
+      let matchtable = content.matchHolder[tab[0].id]
+      fillPopup(matchtable)
     });
   });
 }, false);
@@ -32,17 +26,17 @@ function popuplatePopup(shop, discount, link) {
   //Add lister to redirect tab page on click in popup window
   h3.getElementsByTagName("a")[0].addEventListener("mouseup", function (e) {
     //Only update url if left mouse button was pressed. This means that middel click
-    // will open the url in a new tab if wanted, and not do the normal url update
+    // will open the url in a new tab if wanted, and not do the url update
     if (e.which == 1) {
       chrome.tabs.update({ url: "http://" + link });
     }
   });
 }
 
-function fillPopup() {
+function fillPopup(content) {
   debuglog("Populates popup now")
-  if (matchtable) {
-    for (let item of matchtable) {
+  if (Array.isArray(content)) {
+    for (let item of content) {
       //popuplatePopup(item.shop, item.discount, item.link);
       popuplatePopup(item[1], item[2], item[3]);
     }
