@@ -1,5 +1,4 @@
 debuglog('Background: scrip is running!');
-var matchtabels = new Object(); //Holder varible for matched pages
 
 chrome.runtime.onInstalled.addListener(function () {
   //Runs at installations time
@@ -33,14 +32,19 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     //Used to receive message from content about a page match
     debuglog("Badge text set!");
     chrome.browserAction.setBadgeText({ text: "!", tabId: sender.tab.id });
-    if (Object.keys(matchtabels).length > 10) {
-      let firstObject = Object.keys(matchtabels)[0]
-      delete matchtabels[firstObject]
-    }
-    matchtabels[sender.tab.id] = message.matchHolder;
-  } else if (message.getmatch) {
-    //Used to send message to popup of known matches on the page
-    sendResponse(matchtabels[message.tab]);
+    chrome.storage.local.get("matchHolder", function (content) {
+      let matchHolder = content.matchHolder || {};
+      //Only store a fixed amount of data, and delete first and last if more data is needed
+      if (Object.keys(matchHolder).length > 10) {
+        let lastObject = Object.keys(matchHolder)[10]
+        delete matchHolder[lastObject]
+        let firstObject = Object.keys(matchHolder)[0]
+        delete matchHolder[firstObject]
+      }
+      console.table(matchHolder)
+      matchHolder[sender.tab.id] = message.matchHolder;
+      chrome.storage.local.set({ "matchHolder": matchHolder });
+    });
   } else if (message.getDiscounts) {
     //By request of options page, initiate a new download of data
     getDiscounts();
@@ -56,63 +60,25 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 function getDiscounts() {
-  //Initiales download for all active discount services.
-  //Anohter function handels the incoming result async
   chrome.storage.sync.get('memberships', function (items) {
     let servicses = items.memberships || [];
     for (let service of servicses) {
-      let request = new XMLHttpRequest();
-      request.onload = setDiscounts;
-      request.open("get", DiscountServices[service][0].databaseURL, true);
-      request.send();
+      fetch(DiscountServices[service][0].databaseURL)
+        .then(response => response.text())
+        .then(input => {
+          //replace singel quotes with double quotes
+          //removes semicolons
+          input = input.replace(/'/g, "\"").replace(/;/g, "")
+          return JSON.parse(input)
+        })
+        .then(input => {
+          chrome.storage.local.set({ [DiscountServices[service][0].arrayName]: input }, function () {
+            debuglog("Data for: " + service + " is updated")
+          });
+        })
+        .catch(err => console.error(err))
     }
   });
-}
-
-function setDiscounts() {
-  //Parse incoming data, and fix known errors
-  //Save the data to a chrome local storage 
-  if (this.status == 200) {
-    //Loop though all services
-    for (let service in DiscountServices) {
-      //Look for URL of each service and match it with the received data
-      if (this.responseURL.endsWith(DiscountServices[service][0].databaseURL)) {
-        let arrayName = DiscountServices[service][0].arrayName
-        let text = this.responseText
-        try {
-          text = JSON.parse(text)
-        }
-        catch (err1) {
-          debuglog(service +" fix error 1")
-          if (err1.toString().includes("Unexpected token '")) {
-            //replace singel quotes with double quotes
-            text = text.replace(/'/g, "\"")
-            try {
-              text = JSON.parse(text)
-            }
-            catch (err2) {
-              debuglog(service +" fix error 2")
-              if (err2.toString().includes("Unexpected token ;")) {
-                //removes semicolons
-                text = text.replace(/;/g, "")
-                text = JSON.parse(text)
-              } else {
-                console.error(err2)
-                break
-              }
-            }
-          } else {
-            console.error(err1)
-            break
-          }
-        }
-        chrome.storage.local.set({ [arrayName]: text }, function () {
-          debuglog("Detected " + service + " to updated")
-        });
-        break;
-      }
-    }
-  }
 }
 
 debuglog('Background: scrip end.');
