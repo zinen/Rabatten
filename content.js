@@ -1,7 +1,13 @@
 debuglog("Content: script is running!");
 let ignoredomain
 
-let tabdomainname = document.domain.split(".").slice(-2).join(".");
+let tabdomainname = document.domain.split(".")
+if (tabdomainname[tabdomainname.length - 1] == "uk") {
+  //Fix for UK domains, cant handel domain suffixes with only ".uk" but will handle domains like ".co.uk"
+  tabdomainname = tabdomainname.slice(-3).join(".");
+} else {
+  tabdomainname = tabdomainname.slice(-2).join(".");
+}
 
 debuglog("Content: domain name: " + tabdomainname)
 
