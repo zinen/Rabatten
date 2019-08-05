@@ -21,7 +21,7 @@
       font-size: 18px;
       user-select: none;
     }
-    
+
     /* Hide the browser's default checkbox */
     .container input {
       position: absolute;
@@ -91,6 +91,22 @@
     button:not(:last-child) {
       border: 0mm;
     }
+    #domainFilter {
+      font-size: 16px;
+      line-height: 15px;
+      min-height: 100px;
+      min-width: 300px;
+      border-radius: 6px;
+    }
+    .hint {
+      font-size: 12px;
+      margin-top: 0px;
+      color: #999999;
+    }
+    .code {
+      color: #333333;
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -102,6 +118,11 @@
   <h3>V&aelig;lg medlemskaber</h3>
   <form id="form">
   </form>
+  <br />
+  <h3 style="margin-bottom: 0px;">Filtre sider, hvor du ikke vil se popup'en</h3>
+  <p class="hint">Skrives som: <span class="code">google.com,facebook.com</span></p>
+  <textarea id="domainFilter" placeholder="Skrives som: google.com,facebook.com"></textarea>
+  <br />
   <br />
   <button type='submit' id='optionsSubmit'>Gem valg</button>
 </body>

@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Rabatten",
   "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "options_page": "options.html",
   "background": {
     "scripts": [
