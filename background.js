@@ -15,6 +15,12 @@ chrome.runtime.onInstalled.addListener(function () {
       getDiscounts();
     }
   });
+  //Fix for updated installations to get domainfilter varible set
+  chrome.storage.sync.get('domainfilter', function (arraylist) {
+    if (arraylist.domainfilter == null) {
+      chrome.storage.sync.set({ domainfilter: ["facebook.com", "google.com"] });
+    }
+  });
 });
 
 chrome.runtime.onStartup.addListener(function () {
