@@ -2,11 +2,7 @@
   "manifest_version": 2,
   "name": "Rabatten",
   "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden",
-<<<<<<< Updated upstream
-  "version": "0.1.0",
-=======
   "version": "0.1.0.1",
->>>>>>> Stashed changes
   "options_page": "options.html",
   "background": {
     "scripts": [
