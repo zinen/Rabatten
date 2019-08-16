@@ -28,7 +28,7 @@ try {
 chrome.storage.sync.get('memberships', function (membershipsarray) {
   const promises = []
   //Loop membership and note them in a promise
-  for (let membership of membershipsarray.memberships) {
+  for (let membership of membershipsarray.memberships || []) {
     promises.push(new Promise(resolve => {
       setTimeout(resolve, 2000)
       let arrayName = DiscountServices[membership][0].arrayName
@@ -46,7 +46,7 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
   }
   Promise.all(promises).then(function (matches) {
     //Flatten returned array from promises
-    matches = matches.reduce((flatten, arr) => [...flatten, ...arr])
+    matches = matches.reduce((flatten, arr) => [...flatten, ...arr],[])
     if (matches.length > 0) {
       //Notify the background script of a match
       chrome.runtime.sendMessage({ rabatmatch: true, matchHolder: matches });
@@ -60,25 +60,22 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
 function makeTopPane(matchHolder) {
   if (!ignoredomain.includes(tabdomainname)) {
     debuglog("Content: matchholder info used");
-    let shop, discount, service
+    let text
     if (matchHolder.length > 1) {
-      shop = "Flere"
-      discount = "tilbud"
+      text = tabdomainname + ' har flere tilbud igennem ' + matchHolder[0][4]
       //Look if more then one service has discount on the page
       for (i = 0; i < matchHolder.length - 1; i++) {
         if (matchHolder[i][4] != matchHolder[i + 1][4]) {
-          service = "flere udbydere"
+          text = tabdomainname + ' har tilbud igennem flere udbydere'
           break;
-        } else {
-          //DiscountServices
-          service = matchHolder[i][4]
         }
       }
     } else {
-      shop = matchHolder[0][1]
-      discount = matchHolder[0][2]
+      let shop = matchHolder[0][1]
+      let discount = matchHolder[0][2]
       let link = matchHolder[0][3] //Link for popup
-      service = '<a href=" //' + link + '"><font style="color:blue!important;">' + matchHolder[0][4] + '</font></a>'
+      let service = '<a href=" //' + link + '"><font style="color:blue!important;">' + matchHolder[0][4] + '</font></a>'
+      text = shop + ' har ' + discount + ' igennem ' + service
     }
     let newdiv = document.createElement("div");
     newdiv.style = "all: initial;display:block;height:30px";
@@ -86,8 +83,7 @@ function makeTopPane(matchHolder) {
       '<div id="aso12909" style="width:100%;top:0px;padding-right:10px;padding-left:10px;background-color:rgba(244,230,155,0.8);position: fixed;box-shadow: 0 2px 6px #3C4A54;z-index:9999999;">\n' +
       '<font style="color:black!important;font-size:120%;font-family:Arial;">' +
       '<img src="' + chrome.runtime.getURL('icon48.png') + '" alt="" style="margin-left:0px; margin-top:0px; width:28px; height:28px; vertical-align:sub;display:inline-block" />' +
-      shop + ' har ' + discount + ' igennem ' + service +
-      '         <button id="aso12910" style="color:black!important;font-size:20px;font-family:verdana;height: 28px;float: right;margin-right: 12px;border: none;background: none;cursor: pointer;">X</button>' +
+      text + '<button id="aso12910" style="color:black!important;font-size:20px;font-family:verdana;height: 28px;float: right;margin-right: 12px;border: none;background: none;cursor: pointer;">X</button>' +
       '</font>\n' +
       '</div>\n'
     // if (matchHolder.length > 1) {
