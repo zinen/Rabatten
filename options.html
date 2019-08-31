@@ -3,14 +3,9 @@
 
 <head>
   <title>Indstillinger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <style>
-    body {
-      min-width: 300px;
-      font-size: 16px;
-      font-family: Verdana;
-      align-items: center;
-    }
-
     /* Customize the label (the container) */
     .container {
       display: inline-block;
@@ -18,8 +13,12 @@
       padding-left: 35px;
       margin-bottom: 12px;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 16px;
       user-select: none;
+    }
+    a.container {
+      padding-left: 4px;
+      font-size: 16px;
     }
 
     /* Hide the browser's default checkbox */
@@ -80,53 +79,48 @@
       transform: rotate(40deg);
     }
 
-    button {
-      background-color: #2196F3;
-      color: white;
-      padding: 10px 24px;
-      cursor: pointer;
-      float: left;
-    }
-
-    button:not(:last-child) {
-      border: 0mm;
-    }
-    #domainFilter {
+    textarea#domainFilter {
       font-size: 16px;
       line-height: 15px;
       min-height: 100px;
-      min-width: 300px;
+      min-width: 294px;
       border-radius: 6px;
-    }
-    .hint {
-      font-size: 12px;
-      margin-top: 0px;
-      color: #999999;
-    }
-    .code {
-      color: #333333;
-      font-style: italic;
     }
   </style>
 </head>
 
 <body>
-  <h2>
-    <img src="icon48.png" alt=""
-      style="margin-left:0px; margin-top:0px; width:40px; height:40px; vertical-align:sub;" />
-    Rabatten indstillinger</h2>
-  <h3>V&aelig;lg medlemskaber</h3>
-  <form id="form">
-  </form>
-  <br />
-  <h3 style="margin-bottom: 0px;">Filtre sider, hvor du ikke vil se popup'en</h3>
-  <p class="hint">Skrives som: <span class="code">google.com,facebook.com</span></p>
-  <textarea id="domainFilter" placeholder="Skrives som: google.com,facebook.com"></textarea>
-  <br />
-  <br />
-  <button type='submit' id='optionsSubmit'>Gem valg</button>
-</body>
-<script src="common.js"></script>
-<script src="options.js"></script>
+  <header>
+    <p class="title reduced"><img src="icon48.png" alt="" class="header-toplogo" />Indstillinger</p>
+    <p class="title bigger"><img src="icon48.png" alt="" class="header-toplogo" />Rabatten indstillinger</p>
+    <span id="header-menu">
+      <i><a href="popup.html">tilbage</a></i>
+    </span>
+  </header>
+  <section id="section1" class="list-checkmark">
+    <p class="title2">V&aelig;lg medlemskaber</p>
+    <br />
+    <form id="form">
+    </form>
 
+  </section>
+
+  <section id="section1" class="textarea">
+    <p class="title2">Filtre sider, hvor du ikke vil se popup'en</p>
+    <p class="hint">Skrives som: <span class="code">google.com,facebook.com</span></p>
+    <textarea id="domainFilter"></textarea>
+  </section>
+  <section>
+  <br />
+
+  <button type="submit" id="optionsSubmit">Gem valg</button>
+</section>
+  <footer>
+    <i>Issues can be
+      <a href="http://www.github.com/zinen/Rabatten/issues">reported here</a>.
+    </i>
+  </footer>
+  <script src="common.js"></script>
+  <script src="options.js"></script>
+</body>
 </html>

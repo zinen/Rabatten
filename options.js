@@ -19,6 +19,7 @@ function formCreate() {
       let newa = document.createElement('a');
       newa.href = DiscountServices[key][0].homepage
       newa.innerText = "[link]"
+      newa.className = 'container';
       let newspan = document.createElement('span');
       newspan.className = 'checkmark';
       newlabel.appendChild(checkbox);

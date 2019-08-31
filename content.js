@@ -74,16 +74,16 @@ function makeTopPane(matchHolder) {
       let shop = matchHolder[0][1]
       let discount = matchHolder[0][2]
       let link = matchHolder[0][3] //Link for popup
-      let service = '<a href=" //' + link + '"><font style="color:blue!important;">' + matchHolder[0][4] + '</font></a>'
+      let service = '<a href=" //' + link + '"><font style="">' + matchHolder[0][4] + '</font></a>'
       text = shop + ' har ' + discount + ' igennem ' + service
     }
     let newdiv = document.createElement("div");
-    newdiv.style = "all: initial;display:block;height:30px";
+    newdiv.style = "display:block;height:30px";
     newdiv.innerHTML =
       '<div id="aso12909" style="width:100%;top:0px;padding-right:10px;padding-left:10px;background-color:rgba(244,230,155,0.8);position: fixed;box-shadow: 0 2px 6px #3C4A54;z-index:9999999;">\n' +
-      '<font style="color:black!important;font-size:120%;font-family:Arial;">' +
+      '<font style="font-size:20px;font-family:Arial;">' +
       '<img src="' + chrome.runtime.getURL('icon48.png') + '" alt="" style="margin-left:0px; margin-top:0px; width:28px; height:28px; vertical-align:sub;display:inline-block" />' +
-      text + '<button id="aso12910" style="color:black!important;font-size:20px;font-family:verdana;height: 28px;float: right;margin-right: 12px;border: none;background: none;cursor: pointer;">X</button>' +
+      text + '<button id="aso12910" style="font-size:20px;font-family:verdana;height: 28px;float: right;margin-right: 12px;border: none;background: none;cursor: pointer;">X</button>' +
       '</font>\n' +
       '</div>\n'
     // if (matchHolder.length > 1) {
@@ -91,9 +91,13 @@ function makeTopPane(matchHolder) {
     //   newdiv.getElementsByTagName("a")[0].remove()
     // }
     //Append div as the first child of body
-    document.body.insertBefore(newdiv, document.body.firstChild);
+    let shadowdiv = document.createElement("div");
+    document.body.insertBefore(shadowdiv, document.body.firstChild);
+    let shadow = shadowdiv.attachShadow({mode: 'open'});
+    shadow.appendChild(newdiv)
+    //document.body.insertBefore(newdiv, document.body.firstChild);
     //Make close button function
-    let elem = document.getElementById("aso12910")
+    let elem = shadow.getElementById("aso12910")
     elem.addEventListener("click", function () {
       elem.parentNode.parentNode.parentNode.remove()
       chrome.storage.local.set({ 'rabat_closed': tabdomainname }, function () {
