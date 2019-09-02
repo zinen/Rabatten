@@ -1,7 +1,6 @@
 debuglog("Content: script is running!");
-let ignoredomain
 
-//let tabdomainname = document.domain.split(".").slice(-2).join(".");
+let ignoredomain
 let tabdomainname = document.domain.split(".")
 if (tabdomainname[tabdomainname.length - 1] == "uk") {
   //Fix for uk domains, cant handel domain suffixes with only ".uk" but will handle domains like ".co.uk"
@@ -86,16 +85,11 @@ function makeTopPane(matchHolder) {
       text + '<button id="aso12910" style="font-size:20px;font-family:verdana;height: 28px;float: right;margin-right: 12px;border: none;background: none;cursor: pointer;">X</button>' +
       '</font>\n' +
       '</div>\n'
-    // if (matchHolder.length > 1) {
-    //   //Delete link in the new dir, if multible discounts found
-    //   newdiv.getElementsByTagName("a")[0].remove()
-    // }
     //Append div as the first child of body
     let shadowdiv = document.createElement("div");
     document.body.insertBefore(shadowdiv, document.body.firstChild);
     let shadow = shadowdiv.attachShadow({mode: 'open'});
     shadow.appendChild(newdiv)
-    //document.body.insertBefore(newdiv, document.body.firstChild);
     //Make close button function
     let elem = shadow.getElementById("aso12910")
     elem.addEventListener("click", function () {

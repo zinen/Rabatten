@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
 }, false);
 
 function popuplatePopup(shop, discount, discountlink, service) {
-  let matchlist = document.getElementById('match-list')
-  let newEntry = document.createElement('li')
+  let matchlist = document.getElementById('match-list');
+  let newEntry = document.createElement('li');
   newEntry.classList.add('list-entry');
   matchlist.appendChild(newEntry);
   let title = document.createElement('p')
@@ -22,31 +22,30 @@ function popuplatePopup(shop, discount, discountlink, service) {
   newEntry.appendChild(title);
   let badge
   if(service){
-    badge = document.createElement('span')
+    badge = document.createElement('span');
     badge.classList.add('badge');
     badge.classList.add('right');
-    badge.innerText = service
+    badge.innerText = service;
     newEntry.appendChild(badge);
   }
-  let content = document.createElement('p')
+  let content = document.createElement('p');
   content.classList.add('title3');
-  content.innerText = discount
+  content.innerText = discount;
   newEntry.appendChild(content);
   if (discountlink) {
-    let newA = document.createElement('a')
+    let newA = document.createElement('a');
     newA.classList.add('nounderline');
     newA.appendChild(title);
     if(badge){newA.appendChild(badge);}
     newA.appendChild(content);
     newEntry.appendChild(newA);
-    newA.setAttribute('href','https://' + discountlink)
-    newA.setAttribute('title','Open link')
-    //content.innerHTML += ' <a href="http://' + discountlink + '">[link]</a>'
+    newA.setAttribute('href','https://' + discountlink);
+    newA.setAttribute('title','Open link');
     newEntry.classList.add('is-link');
     //Add lister to redirect tab page on click in popup window
     newEntry.addEventListener("mouseup", function (e) {
-      //Only update url if left mouse button was pressed. This means that middel click
-      // will open the url in a new tab if wanted, and not do the url update
+      //Only update url if left mouse button is pressed. This means that middel click
+      // will open the url in a new tab, and do a url update 
       if (e.which == 1) {
         chrome.tabs.update({ url: "https://" + discountlink });
       }
