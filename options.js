@@ -3,7 +3,7 @@ debuglog('Options: scrip is running!');
 function formCreate() {
   chrome.storage.sync.get('memberships', function (arraylist) {
     let list = arraylist.memberships || [];
-    let form = document.getElementById('check-list');
+    let container = document.getElementById('check-list');
     for (let key in DiscountServices) {
       let newP = document.createElement('p');
       let newlabel = document.createElement('label');
@@ -17,15 +17,15 @@ function formCreate() {
       }
       checkbox.name = key;
       let newa = document.createElement('a');
-      newa.href = DiscountServices[key][0].homepage;
-      newa.innerText = "[link]";
+      newa.href = DiscountServices[key][0].homepage
+      newa.innerText = "[link]"
       let newspan = document.createElement('span');
       newspan.className = 'checkmark';
       newlabel.appendChild(checkbox);
       newlabel.appendChild(newspan);
       newP.appendChild(newlabel);
       newP.appendChild(newa);
-      form.appendChild(newP);
+      container.appendChild(newP);
     }
   });
 }
