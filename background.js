@@ -1,33 +1,65 @@
 debuglog('Background: scrip is running!');
 
-chrome.runtime.onInstalled.addListener(function () {
-  //Runs at installations time
-  chrome.storage.sync.get('memberships', function (items) {
-    if (items.memberships == null) {
-      //Open settings tab, at first run if no values from sync storage is found
-      debuglog("Open settings tab for the first time.");
-      //Create empty sync varible
-      chrome.storage.sync.set({ memberships: [] });
-      //Open settings tab
-      let optionsUrl = chrome.extension.getURL("/options.html");
-      chrome.tabs.create({ url: optionsUrl });
-    } else {
-      getDiscounts();
+chrome.runtime.onInstalled.addListener(async function () {
+  function getStorageSync(key) {
+    return new Promise(resolve => {
+      chrome.storage.sync.get(key, function (data) {
+        resolve(data);
+      })
+    })
+  }
+  function setStorageSync(key, data) {
+    return new Promise(resolve => {
+      chrome.storage.sync.set({ [key]: [data] }, function () {
+        resolve();
+      });
+    })
+  }
+  //Known data settings, and their default values
+  let known_settings = {
+    version: null, //Does nothing
+    memberships: "_options", //Special case, opens settingspage
+    domainfilter: ["facebook.com", "google.com", "forbrugsforeningen.dk"] //For compatablity for installs before v0.1.0
+  }
+  let optionsOpen = false;
+  let settings = await getStorageSync(null);
+  let start_settings = Object.assign({}, settings);
+  for (var key in known_settings) {
+    if (!settings.hasOwnProperty(key)) {
+      if (known_settings[key] === null) {
+        continue;
+      } else if (known_settings[key].slice(0, 1) == "_") {
+        if (known_settings[key] == "_options") {
+          optionsOpen = true;
+        } else {
+          console.error("Special case, unkown");
+        }
+      } else {
+        debuglog("Data: "+ key+ " is missing from settings, added now");
+        settings[key] = known_settings[key];
+      }
     }
-  });
-  //Fix for updated installations to get domainfilter varible set
-  chrome.storage.sync.get('domainfilter', function (arraylist) {
-    if (arraylist.domainfilter == null) {
-      chrome.storage.sync.set({ domainfilter: ["facebook.com", "google.com"] });
+  }
+  if (JSON.stringify(settings) !== JSON.stringify(start_settings)) {
+    debuglog("Creating settings now");
+    for (var key in settings) {
+      await setStorageSync(key, settings[key])
     }
-  });
+  }
+  if (optionsOpen) {
+    let optionsUrl = chrome.extension.getURL("/options.html");
+    chrome.tabs.create({ url: optionsUrl });
+  } else {
+    //If all was settings is okay, without need for manual updating of varibles
+    //then get updated list of memberships
+    getDiscounts();
+  }
 });
 
 chrome.runtime.onStartup.addListener(function () {
   //Runs at startup
-  chrome.storage.local.set({ 'rabat_closed': "" }, function () {
-    debuglog("Varible rabat_closed was cleared");
-  });
+  chrome.storage.local.remove('rabat_closed')
+  chrome.storage.local.remove('matchHolder')
   getDiscounts()
 });
 
@@ -40,14 +72,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     chrome.browserAction.setBadgeText({ text: "!", tabId: sender.tab.id });
     chrome.storage.local.get("matchHolder", function (content) {
       let matchHolder = content.matchHolder || {};
-      //Only store a fixed amount of data, and delete first and last if more data is needed
+      //Only store a fixed amount of data, and delete first if more data is needed
       if (Object.keys(matchHolder).length > 10) {
-        let lastObject = Object.keys(matchHolder)[10]
-        delete matchHolder[lastObject]
         let firstObject = Object.keys(matchHolder)[0]
         delete matchHolder[firstObject]
       }
-      console.table(matchHolder)
       matchHolder[sender.tab.id] = message.matchHolder;
       chrome.storage.local.set({ "matchHolder": matchHolder });
     });

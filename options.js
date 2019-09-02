@@ -46,7 +46,7 @@ function formSave() {
 
 function textareaCreate() {
   chrome.storage.sync.get('domainfilter', function (arraylist) {
-    let list = arraylist.domainfilter || ["facebook.com", "google.com"];
+    let list = arraylist.domainfilter || [];
     let text = "";
     for (let item of list) {
       text += item + ","
@@ -85,6 +85,7 @@ function textareaSave() {
 document.getElementById('optionsSubmit').onclick = function () {
   formSave();
   textareaSave();
+  chrome.storage.sync.set({ version: (chrome.runtime.getManifest()).version})
   window.close();
 }
 debuglog('Options: scrip end.');
