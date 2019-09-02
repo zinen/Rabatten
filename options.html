@@ -5,122 +5,29 @@
   <title>Indstillinger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <style>
-    /* Customize the label (the container) */
-    .container {
-      display: inline-block;
-      position: relative;
-      padding-left: 35px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      font-size: 16px;
-      user-select: none;
-    }
-    a.container {
-      padding-left: 4px;
-      font-size: 16px;
-    }
-
-    /* Hide the browser's default checkbox */
-    .container input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-    }
-
-    /* Create a custom checkbox */
-    .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 22px;
-      width: 22px;
-      background-color: #b1b1b1;
-    }
-
-    /* Unchecked: On mouse-over, add a grey background color */
-    .container:hover input~.checkmark {
-      background-color: #999999;
-    }
-
-    /* When the checkbox is checked, add a blue background */
-    .container input:checked~.checkmark {
-      background-color: #2196F3;
-    }
-
-    /* Checked: On mouse-over, add a grey background color */
-    .container:hover input:checked~.checkmark,
-    button:hover {
-      background-color: #083050;
-    }
-
-    /* Create the checkmark/indicator (hidden when not checked) */
-    .checkmark:after {
-      content: "";
-      position: absolute;
-      display: none;
-    }
-
-    /* Show the checkmark when checked */
-    .container input:checked~.checkmark:after {
-      display: block;
-    }
-
-    /* Style the checkmark/indicator */
-    .container .checkmark:after {
-      left: 7px;
-      top: 3px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      transform: rotate(40deg);
-    }
-
-    textarea#domainFilter {
-      font-size: 16px;
-      line-height: 15px;
-      min-height: 100px;
-      min-width: 294px;
-      border-radius: 6px;
-    }
-  </style>
 </head>
 
 <body>
   <header>
-    <p class="title reduced"><img src="icon48.png" alt="" class="header-toplogo" />Indstillinger</p>
-    <p class="title bigger"><img src="icon48.png" alt="" class="header-toplogo" />Rabatten indstillinger</p>
-    <span id="header-menu">
-      <i><a href="popup.html">tilbage</a></i>
-    </span>
+    <p class="title"><img src="icon48.png" alt="" class="header-toplogo" />Rabatten indstillinger</p>
   </header>
-  <section id="section1" class="list-checkmark">
-    <p class="title2">V&aelig;lg medlemskaber</p>
-    <br />
+  <section id="section1">
     <form id="form">
+      <h2>V&aelig;lg medlemskaber</h2>
+      <div id="check-list">
+      </div>
+      <h2>Filtre sider, hvor du ikke vil se popup'en</h2>
+      <p class="hint">Skrives som: <span class="code">google.com,facebook.com</span></p>
+      <textarea id="domainFilter">
+      </textarea>
+      <p><button type="submit" id="optionsSubmit">Gem valg</button></p>
     </form>
-
   </section>
-
-  <section id="section1" class="textarea">
-    <p class="title2">Filtre sider, hvor du ikke vil se popup'en</p>
-    <p class="hint">Skrives som: <span class="code">google.com,facebook.com</span></p>
-    <textarea id="domainFilter"></textarea>
-  </section>
-  <section>
-  <br />
-
-  <button type="submit" id="optionsSubmit">Gem valg</button>
-</section>
   <footer>
-    <i>Issues can be
-      <a href="http://www.github.com/zinen/Rabatten/issues">reported here</a>.
-    </i>
+    <em>Issues can be<a href="http://www.github.com/zinen/Rabatten/issues">reported here</a>.</em>
   </footer>
   <script src="common.js"></script>
   <script src="options.js"></script>
 </body>
+
 </html>
