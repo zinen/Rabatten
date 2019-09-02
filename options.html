@@ -3,130 +3,31 @@
 
 <head>
   <title>Indstillinger</title>
-  <style>
-    body {
-      min-width: 300px;
-      font-size: 16px;
-      font-family: Verdana;
-      align-items: center;
-    }
-
-    /* Customize the label (the container) */
-    .container {
-      display: inline-block;
-      position: relative;
-      padding-left: 35px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      font-size: 18px;
-      user-select: none;
-    }
-
-    /* Hide the browser's default checkbox */
-    .container input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-    }
-
-    /* Create a custom checkbox */
-    .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 22px;
-      width: 22px;
-      background-color: #b1b1b1;
-    }
-
-    /* Unchecked: On mouse-over, add a grey background color */
-    .container:hover input~.checkmark {
-      background-color: #999999;
-    }
-
-    /* When the checkbox is checked, add a blue background */
-    .container input:checked~.checkmark {
-      background-color: #2196F3;
-    }
-
-    /* Checked: On mouse-over, add a grey background color */
-    .container:hover input:checked~.checkmark,
-    button:hover {
-      background-color: #083050;
-    }
-
-    /* Create the checkmark/indicator (hidden when not checked) */
-    .checkmark:after {
-      content: "";
-      position: absolute;
-      display: none;
-    }
-
-    /* Show the checkmark when checked */
-    .container input:checked~.checkmark:after {
-      display: block;
-    }
-
-    /* Style the checkmark/indicator */
-    .container .checkmark:after {
-      left: 7px;
-      top: 3px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      transform: rotate(40deg);
-    }
-
-    button {
-      background-color: #2196F3;
-      color: white;
-      padding: 10px 24px;
-      cursor: pointer;
-      float: left;
-    }
-
-    button:not(:last-child) {
-      border: 0mm;
-    }
-    #domainFilter {
-      font-size: 16px;
-      line-height: 15px;
-      min-height: 100px;
-      min-width: 300px;
-      border-radius: 6px;
-    }
-    .hint {
-      font-size: 12px;
-      margin-top: 0px;
-      color: #999999;
-    }
-    .code {
-      color: #333333;
-      font-style: italic;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-  <h2>
-    <img src="icon48.png" alt=""
-      style="margin-left:0px; margin-top:0px; width:40px; height:40px; vertical-align:sub;" />
-    Rabatten indstillinger</h2>
-  <h3>V&aelig;lg medlemskaber</h3>
-  <form id="form">
-  </form>
-  <br />
-  <h3 style="margin-bottom: 0px;">Filtre sider, hvor du ikke vil se popup'en</h3>
-  <p class="hint">Skrives som: <span class="code">google.com,facebook.com</span></p>
-  <textarea id="domainFilter" placeholder="tom"></textarea>
-  <br />
-  <br />
-  <button type='submit' id='optionsSubmit'>Gem valg</button>
+  <header>
+    <p class="title"><img src="icon48.png" alt="" class="header-toplogo" />Rabatten indstillinger</p>
+  </header>
+  <section id="section1">
+    <form id="form">
+      <h2>V&aelig;lg medlemskaber</h2>
+      <div id="check-list">
+      </div>
+      <h2>Filtre sider, hvor du ikke vil se popup'en</h2>
+      <p class="hint">Skrives som: <span class="code">google.com,facebook.com</span></p>
+      <textarea id="domainFilter">
+      </textarea>
+      <p><button type="submit" id="optionsSubmit">Gem valg</button></p>
+    </form>
+  </section>
+  <footer>
+    <em>Issues can be<a href="http://www.github.com/zinen/Rabatten/issues">reported here</a>.</em>
+  </footer>
+  <script src="common.js"></script>
+  <script src="options.js"></script>
 </body>
-<script src="common.js"></script>
-<script src="options.js"></script>
 
 </html>
