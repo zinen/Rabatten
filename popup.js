@@ -5,43 +5,62 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
     chrome.storage.local.get("matchHolder", function (content) {
       //Get data, of any from local storage
-      let matchtable = content.matchHolder[tab[0].id]
+      let matchtable = content.matchHolder[tab[0].id] || null
       fillPopup(matchtable)
     });
   });
 }, false);
 
-function popuplatePopup(shop, discount, link) {
-  let elements = document.body.getElementsByTagName("h2")
-  // Element are already populated, then create a line object
-  if (elements.length > 0) {
-    document.body.appendChild(document.createElement("hr"));
+function popuplatePopup(shop, discount, discountlink, service) {
+  let matchlist = document.getElementById('match-list');
+  let newEntry = document.createElement('li');
+  newEntry.classList.add('list-entry');
+  matchlist.appendChild(newEntry);
+  let title = document.createElement('p')
+  title.classList.add('title2');
+  title.innerText = shop;
+  newEntry.appendChild(title);
+  let badge
+  if(service){
+    badge = document.createElement('span');
+    badge.classList.add('badge');
+    badge.classList.add('right');
+    badge.innerText = service;
+    newEntry.appendChild(badge);
   }
-  let h2 = document.createElement("h2")
-  h2.innerText = shop;
-  document.body.appendChild(h2);
-  let h3 = document.createElement("h3")
-  h3.innerHTML = discount + ' <a href="http://' + link + '">[link]</a>'
-  h2.append(h3);
-  //Add lister to redirect tab page on click in popup window
-  h3.getElementsByTagName("a")[0].addEventListener("mouseup", function (e) {
-    //Only update url if left mouse button was pressed. This means that middel click
-    // will open the url in a new tab if wanted, and not do the url update
-    if (e.which == 1) {
-      chrome.tabs.update({ url: "http://" + link });
-    }
-  });
+  let content = document.createElement('p');
+  content.classList.add('title3');
+  content.innerText = discount;
+  newEntry.appendChild(content);
+  if (discountlink) {
+    let newA = document.createElement('a');
+    newA.classList.add('nounderline');
+    newA.appendChild(title);
+    if(badge){newA.appendChild(badge);}
+    newA.appendChild(content);
+    newEntry.appendChild(newA);
+    newA.setAttribute('href','https://' + discountlink);
+    newA.setAttribute('title','Open link');
+    newEntry.classList.add('is-link');
+    //Add lister to redirect tab page on click in popup window
+    newEntry.addEventListener("mouseup", function (e) {
+      //Only update url if left mouse button is pressed. This means that middel click
+      // will open the url in a new tab, and do a url update 
+      if (e.which == 1) {
+        chrome.tabs.update({ url: "https://" + discountlink });
+      }
+    });
+  }
 }
 
 function fillPopup(content) {
   debuglog("Populates popup now")
   if (Array.isArray(content)) {
     for (let item of content) {
-      //popuplatePopup(item.shop, item.discount, item.link);
-      popuplatePopup(item[1], item[2], item[3]);
+      popuplatePopup(item[1], item[2], item[3], item[4]);
     }
   } else {
-    popuplatePopup("No match on this site", "Please report if this is wrong", "github.com/zinen/Rabatten/issues");
+    popuplatePopup("No match on this site", "Please report if this is wrong");
   }
 }
 
