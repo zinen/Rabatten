@@ -59,7 +59,7 @@ chrome.runtime.onInstalled.addListener(async function () {
 chrome.runtime.onStartup.addListener(function () {
   //Runs at startup
   chrome.storage.local.remove('rabat_closed')
-  chrome.storage.local.remove('matchHolder')
+  chrome.storage.local.set({ "matchHolder": {} });
   getDiscounts()
 });
 
@@ -72,12 +72,15 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     chrome.browserAction.setBadgeText({ text: "!", tabId: sender.tab.id });
     chrome.storage.local.get("matchHolder", function (content) {
       let matchHolder = content.matchHolder || {};
+      console.log(Object.keys(matchHolder).length)
       //Only store a fixed amount of data, and delete first if more data is needed
       if (Object.keys(matchHolder).length > 10) {
         let firstObject = Object.keys(matchHolder)[0]
+        console.log("Deleting",matchHolder[firstObject])
         delete matchHolder[firstObject]
       }
       matchHolder[sender.tab.id] = message.matchHolder;
+      console.log("adding data",matchHolder)
       chrome.storage.local.set({ "matchHolder": matchHolder });
     });
   } else if (message.getDiscounts) {
