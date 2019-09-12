@@ -3,6 +3,7 @@ debuglog('Popup: scrip is running!');
 document.addEventListener('DOMContentLoaded', function () {
   debuglog('DOM fully loaded and parsed');
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
+    if(tab===null){return};
     chrome.storage.local.get("matchHolder", function (content) {
       //Get data, of any from local storage
       let matchtable = content.matchHolder[tab[0].id] || null
@@ -14,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
 function popuplatePopup(shop, discount, discountlink, service) {
   let matchlist = document.getElementById('match-list');
   let newEntry = document.createElement('li');
-  newEntry.classList.add('list-entry');
   matchlist.appendChild(newEntry);
   let title = document.createElement('p')
   title.classList.add('title2');
