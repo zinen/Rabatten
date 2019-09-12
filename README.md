@@ -12,10 +12,10 @@ For mere info, klik på ikonet øverst i højre hjørne når en blå indikator v
 ### Options page
 In the options page, you define which services you want to see your discounts from. And you can specify filters on domains you don’t want to see the discount banner on.
 Options are saved in chrome synchronized storage and thus made available to you'r other installations. 
-*This requires a google account being logged in to chrome else options are only saved localy.*
+*This requires a google account being logged in to chrome otherwise options are only saved localy.*
 
 ### Background page
-The background page is activated when new options are saved or new start of the browser. Once triggered, it will download the database with discounts for the services chosen on options page. 
+The background page is activated when new options are saved or when the browser starts. Once triggered, it will download the database with discounts for the services chosen on options page. 
 
 The background page also enables the content script to send data to popup page.
 
