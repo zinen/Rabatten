@@ -34,6 +34,7 @@ a.nounderline {
 .fullwidth ul {
     padding-left: 0px;
     margin: 0px;
+    list-style: none;
 }
 
 li {
