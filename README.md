@@ -1,4 +1,5 @@
 # Rabatten
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden
 Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.
@@ -11,7 +12,7 @@ For mere info, klik på ikonet øverst i højre hjørne når en blå indikator v
 
 ### Options page
 In the options page, you define which services you want to see your discounts from. And you can specify filters on domains you don’t want to see the discount banner on.
-Options are saved in chrome synchronized storage and thus made available to you'r other installations. 
+Options are saved in chrome synchronized storage and thus made available to your other installations. 
 *This requires a google account being logged in to chrome otherwise options are only saved localy.*
 
 ### Background page
