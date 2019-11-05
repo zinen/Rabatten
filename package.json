@@ -1,0 +1,42 @@
+{
+  "name": "rabatten",
+  "version": "1.0.0",
+  "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden\r Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.",
+  "private": true,
+  "main": "background.js",
+  "scripts": {
+    "test:jsstandard": "standard --verbose",
+    "test:jsstandard:src": "standard --fix src/**.js && standard --verbose src/**.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zinen/Rabatten.git"
+  },
+  "author": "zinen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zinen/Rabatten/issues"
+  },
+  "homepage": "https://github.com/zinen/Rabatten#readme",
+  "devDependencies": {
+    "standard": "^14.3.1"
+  },
+  "standard.options": {
+    "globals": [
+      "fetch",
+      "db",
+      "firebase",
+      "chrome"
+    ],
+    "ignore": [
+      "node_modules/**"
+    ],
+    "plugins": [
+      "html"
+    ],
+    "parser": "babel-eslint",
+    "envs": [
+      "jest"
+    ]
+  }
+}
