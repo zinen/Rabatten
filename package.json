@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden\r Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.",
   "private": true,
-  "main": "background.js",
+  "browser": "background.js",
   "scripts": {
     "test:jsstandard": "standard --verbose",
     "test:jsstandard:src": "standard --fix src/**.js && standard --verbose src/**.js"
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/zinen/Rabatten.git"
   },
   "author": "zinen",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zinen/Rabatten/issues"
   },
