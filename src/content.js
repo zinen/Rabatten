@@ -80,7 +80,7 @@ function makeTopPane (matchHolder) {
     const newdiv = document.createElement('div')
     newdiv.style = 'all:initial;position:absolute;left:0;top:0;'
     newdiv.innerHTML =
-      '<div id="aso12909" style="width:100%;padding-right:10px;padding-left:10px;background-color:rgba(244,230,155,0.8);position: fixed;box-shadow: 0 2px 6px #3C4A54;z-index:9999999;">\n' +
+      '<div id="aso12909" style="width:100%;padding-right:10px;padding-left:10px;background-color:rgba(244,230,155,0.8);position: fixed;box-shadow: 0 2px 6px #3C4A54;z-index:9999999;top:0px">\n' +
       '<font style="font-size:20px;font-family:Arial;">' +
       '<img src="' + chrome.runtime.getURL('icon48.png') + '" alt="" style="margin-left:0px; margin-top:0px; margin-right:4px; width:28px; height:28px; vertical-align:sub;display:inline-block" />' +
       text + '<button id="aso12910" style="font-size:20px;font-family:verdana;height: 28px;float: right;margin-right: 12px;border: none;background: none;cursor: pointer;">X</button>' +
