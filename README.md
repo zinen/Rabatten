@@ -3,6 +3,7 @@
 [![DeepScan grade](https://deepscan.io/api/teams/5999/projects/7865/branches/86176/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5999&pid=7865&bid=86176)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7f37cac1b78f385627d2/maintainability)](https://codeclimate.com/github/zinen/Rabatten/maintainability)
 [![devDependencies Status](https://david-dm.org/zinen/rabatten/dev-status.svg)](https://david-dm.org/zinen/rabatten?type=dev)
+[![BCH compliance](https://bettercodehub.com/edge/badge/zinen/Rabatten?branch=master)](https://bettercodehub.com/results/zinen/Rabatten)
 
 Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden
 Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.
