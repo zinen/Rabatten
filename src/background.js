@@ -1,4 +1,4 @@
-/* global debuglog, chrome, DiscountServices, fetch */
+/* global debuglog, chrome, DiscountServices */
 debuglog('Background: scrip is running!')
 
 chrome.runtime.onInstalled.addListener(async function () {
@@ -100,7 +100,7 @@ async function getDiscounts () {
   chrome.storage.sync.get('memberships', function (items) {
     const servicses = items.memberships || []
     for (const service of servicses) {
-      fetch(DiscountServices[service][0].databaseURL)
+      window.fetch(DiscountServices[service][0].databaseURL)
         .then(response => response.text())
         .then(input => {
           // replace singel quotes with double quotes

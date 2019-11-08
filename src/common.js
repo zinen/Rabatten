@@ -1,4 +1,4 @@
-const debug = false
+const debug = true
 function debuglog (input) { // eslint-disable-line
   if (debug) {
     console.log(input)
