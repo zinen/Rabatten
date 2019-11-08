@@ -1,12 +1,19 @@
 {
   "name": "rabatten",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden\r Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.",
   "private": true,
   "browser": "background.js",
   "scripts": {
-    "test:jsstandard": "standard --verbose",
-    "test:jsstandard:src": "standard --fix src/**.js && standard --verbose src/**.js"
+    "test:jsstandard": "standard --fix src/**.js && standard --verbose src/**.js",
+    "uglify:background": "mkdirp build && terser src/background.js -m -o build/background.js",
+    "uglify:common": "mkdirp build && terser src/common.js -m -o build/common.js",
+    "uglify:content": "mkdirp build && terser src/content.js -m -o build/content.js",
+    "uglify:options": "mkdirp build && terser src/options.js -m -o build/options.js",
+    "uglify:popup": "mkdirp build && terser src/popup.js -m -o build/popup.js",
+    "uglify:all": "npm run uglify:background && npm run uglify:common && npm run uglify:content && npm run uglify:options && npm run uglify:popup",
+    "copy:all": "ncp src/ build/",
+    "build:test": "npm run copy:all && npm run uglify:all"
   },
   "repository": {
     "type": "git",
@@ -19,7 +26,11 @@
   },
   "homepage": "https://github.com/zinen/Rabatten#readme",
   "devDependencies": {
-    "standard": "^14.3.1"
+    "eslint": "^6.6.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "standard": "^14.3.1",
+    "terser": "^4.3.9"
   },
   "standard.options": {
     "globals": [
