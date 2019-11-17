@@ -4,7 +4,7 @@ debuglog('Popup: scrip is running!')
 document.addEventListener('DOMContentLoaded', function () {
   debuglog('DOM fully loaded and parsed')
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
-    if (tab === null) { return };
+    if (tab === null) { return }
     chrome.storage.local.get('matchHolder', function (content) {
       // Get data, of any from local storage
       const matchtable = content.matchHolder[tab[0].id] || null

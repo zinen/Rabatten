@@ -43,7 +43,7 @@ function formSave () {
   }
   chrome.storage.sync.set({ memberships: services })
   chrome.runtime.sendMessage({ getDiscounts: true })
-};
+}
 
 function textareaCreate () {
   chrome.storage.sync.get('domainfilter', function (arraylist) {
