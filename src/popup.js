@@ -33,12 +33,12 @@ function popuplatePopup (inTitel, inSubtitel, inLink, inBadge) {
   title.innerText = inTitel
   newEntry.appendChild(title)
   const badge = makeBadge(inBadge)
-  if (inBadge) { newEntry.appendChild(badge) }
+  if (badge) { newEntry.appendChild(badge) }
   const content = document.createElement('p')
   content.classList.add('title3')
   content.innerText = inSubtitel
   newEntry.appendChild(content)
-  if (inLink) { makeLink(title, badge, content, newEntry, inLink) }
+  if (inLink) { makeLink([title, badge, content], newEntry, inLink) }
 }
 
 function makeBadge (text) {
@@ -50,15 +50,15 @@ function makeBadge (text) {
   return badge
 }
 
-function makeLink (title, badge, content, newEntry, inLink) {
+function makeLink (children, newEntry, inLink) {
   // Transforms list obejct to a link
   const newA = document.createElement('a')
-  newA.classList.add('nounderline')
   // Append all underlying elements to new link object
-  newA.appendChild(title)
-  if (badge) { newA.appendChild(badge) }
-  newA.appendChild(content)
+  for (const child of children) {
+    if (child) { newA.appendChild(child) }
+  }
   newEntry.appendChild(newA)
+  newA.classList.add('nounderline')
   newA.setAttribute('href', 'https://' + inLink)
   newA.setAttribute('title', 'Open link')
   newEntry.classList.add('is-link')

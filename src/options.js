@@ -12,10 +12,8 @@ function formCreate () {
       newLabel.innerText = key
       const checkbox = document.createElement('input')
       checkbox.type = 'checkbox'
-      checkbox.checked = false
-      if (list.includes(key)) {
-        checkbox.checked = true
-      }
+      checkbox.checked = list.includes(key) === true
+      console.log(checkbox.checked)
       checkbox.name = key
       const newA = document.createElement('a')
       newA.href = DiscountServices[key][0].homepage
