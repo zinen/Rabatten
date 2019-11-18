@@ -1,7 +1,7 @@
 /* global debuglog, chrome, DiscountServices */
 debuglog('Options: scrip is running!')
 
-function formCreate () {
+function formCreate () 
   chrome.storage.sync.get('memberships', function (arraylist) {
     const list = arraylist.memberships || []
     const container = document.getElementById('check-list')
