@@ -13,7 +13,8 @@
     "uglify:popup": "mkdirp build && terser src/popup.js -m -o build/popup.js",
     "uglify:all": "npm run uglify:background && npm run uglify:common && npm run uglify:content && npm run uglify:options && npm run uglify:popup",
     "copy:all": "ncp src/ build/",
-    "build:test": "npm run copy:all && npm run uglify:all",
+    "utils:version": "node utils/manifest-version.js",
+    "build": "npm run utils:version && npm run copy:all && npm run uglify:all",
     "upload:chrome": "node -r dotenv/config.js ./node_modules/chrome-webstore-upload-cli/index.js upload --source ./build"
   },
   "repository": {
