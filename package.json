@@ -13,7 +13,8 @@
     "uglify:popup": "mkdirp build && terser src/popup.js -m -o build/popup.js",
     "uglify:all": "npm run uglify:background && npm run uglify:common && npm run uglify:content && npm run uglify:options && npm run uglify:popup",
     "copy:all": "ncp src/ build/",
-    "build:test": "npm run copy:all && npm run uglify:all"
+    "build:test": "npm run copy:all && npm run uglify:all",
+    "upload:chrome": "node -r dotenv/config.js ./node_modules/chrome-webstore-upload-cli/index.js upload --source ./build"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,8 @@
   },
   "homepage": "https://github.com/zinen/Rabatten#readme",
   "devDependencies": {
+    "chrome-webstore-upload-cli": "^1.2.0",
+    "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
@@ -34,9 +37,6 @@
   },
   "standard.options": {
     "globals": [
-      "fetch",
-      "db",
-      "firebase",
       "chrome"
     ],
     "ignore": [

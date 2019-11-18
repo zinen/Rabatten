@@ -3,3 +3,4 @@ tmp/*
 .vscode/*
 src/manifest.json
 build/*
+.env
