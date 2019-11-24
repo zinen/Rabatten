@@ -1,6 +1,6 @@
 {
   "name": "rabatten",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden\r Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.",
   "private": true,
   "browser": "background.js",
