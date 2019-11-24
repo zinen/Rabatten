@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tab === null) { return }
     chrome.storage.local.get('matchHolder', function (content) {
       // Get data, of any from local storage
-      const matchtable = content.matchHolder[tab[0].id] || null
+      const matchtable = content.matchHolder ? content.matchHolder[tab[0].id] : null
       fillPopup(matchtable)
     })
   })
@@ -24,7 +24,7 @@ function fillPopup (content) {
   }
 }
 
-function popuplatePopup (inTitel, inSubtitel, inLink, inBadge) {
+function popuplatePopup (inTitel, inSubtitel, inLink = null, inBadge = null) {
   const matchlist = document.getElementById('match-list')
   const newEntry = document.createElement('li')
   matchlist.appendChild(newEntry)
@@ -43,6 +43,7 @@ function popuplatePopup (inTitel, inSubtitel, inLink, inBadge) {
 
 function makeBadge (text) {
   // Make a badge element, with input as its text
+  if (!text) { return }
   const badge = document.createElement('span')
   badge.classList.add('badge')
   badge.classList.add('right')
