@@ -12,9 +12,9 @@ function readWriteSync () {
     data.version = packageVersion
     data = JSON.stringify(data, null, 2)
     fs.writeFileSync(file, data, 'utf-8')
-    console.log('Write to manifest complete, data :' + packageVersion)
+    console.log('\x1b[33mWrite to manifest complete, data :' + packageVersion)
   } else {
-    console.log('No need to update manifest version')
+    console.log('\x1b[32mNo need to update manifest version')
   }
 }
 
