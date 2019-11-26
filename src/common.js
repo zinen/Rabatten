@@ -1,4 +1,4 @@
-const debug = true
+const debug = false
 /**
  * Debug function used for development.
  * @param {any} input - Any data type to log to the console.
