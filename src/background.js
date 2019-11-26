@@ -96,6 +96,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   }
 })
 
+// Downloads external resources based on chosen services to donwload from
 async function getDiscounts () {
   chrome.storage.sync.get('memberships', function (items) {
     const servicses = items.memberships || []
