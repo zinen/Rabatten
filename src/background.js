@@ -1,6 +1,9 @@
 /* global debuglog, chrome, DiscountServices */
 debuglog('Background: scrip is running!')
 
+/**
+ * Runs on installaton in the browser.
+ */
 chrome.runtime.onInstalled.addListener(async function () {
   function getStorageSync (key) {
     return new Promise(resolve => {
@@ -57,6 +60,9 @@ chrome.runtime.onInstalled.addListener(async function () {
   }
 })
 
+/**
+ * Handling of status to clear saved local variables.
+ */
 chrome.runtime.onStartup.addListener(function () {
   // Runs at startup
   chrome.storage.local.remove('rabat_closed')
@@ -64,6 +70,9 @@ chrome.runtime.onStartup.addListener(function () {
   getDiscounts()
 })
 
+/**
+ * Handling of incoming messages from content and popup script.
+ */
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   // Handels any incoming messeges between background, content, popup and options
   // Respons with needed data
@@ -96,7 +105,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   }
 })
 
-// Downloads external resources based on chosen services to donwload from
+/**
+ * Downloads external resources based on chosen services and saves it locally
+ */
 async function getDiscounts () {
   chrome.storage.sync.get('memberships', function (items) {
     const servicses = items.memberships || []

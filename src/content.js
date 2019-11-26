@@ -12,7 +12,9 @@ if (tabdomainname[tabdomainname.length - 1] === 'uk') {
 
 debuglog('Content: domain name: ' + tabdomainname)
 
-// Get last URL, from which this discount banner was closed on, and store it
+/**
+ * Get last URL, from which this discount banner was closed on, and store it.
+ */
 try {
   chrome.storage.local.get('rabat_closed', function (result) {
     chrome.storage.sync.get('domainfilter', function (arraylist) {
@@ -25,7 +27,9 @@ try {
   console.error(err)
 }
 
-// Initiate the loop of the chosen services
+/**
+ * Initiate the loop of the chosen services.
+ */
 chrome.storage.sync.get('memberships', function (membershipsarray) {
   const promises = []
   // Loop membership and note them in a promise
@@ -58,8 +62,10 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
   })
 })
 
-// Loops the matches for how to show the resulting match or matches
-// matchHolder - Array with arrays holding the matches
+/**
+ * Loops the matches for how to show the resulting match or matches.
+ * @param {Array} matchHolder - Array with arrays holding the matches.
+ */
 function handelMatches (matchHolder) {
   if (!ignoredomain.includes(tabdomainname)) {
     debuglog('Content: matchholder info used')
@@ -84,8 +90,10 @@ function handelMatches (matchHolder) {
   }
 }
 
-// Generates the content for the top pane
-// text - String with HTML code in raw text
+/**
+ * Generates the content for the top pane.
+ * @param {String} text - String with HTML code in raw text
+ */
 function makeTopPane (text) {
   const newdiv = document.createElement('div')
   newdiv.style = 'all:initial;position:absolute;left:0;top:0;'

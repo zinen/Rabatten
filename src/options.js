@@ -1,7 +1,9 @@
 /* global debuglog, chrome, DiscountServices */
 debuglog('Options: scrip is running!')
 
-// Makess a checklist from content of array
+/**
+ * Makess a checklist from content of array.
+ */
 function formCreate () {
   chrome.storage.sync.get('memberships', function (arraylist) {
     const list = arraylist.memberships || []
@@ -31,7 +33,9 @@ function formCreate () {
 }
 formCreate()
 
-// Saves checked and uncheck values to syncronized storage
+/**
+ * Saves checked and uncheck values to syncronized storage.
+ */
 function formSave () {
   const checkboxes = document.getElementsByTagName('input')
   const services = []
@@ -45,7 +49,9 @@ function formSave () {
   chrome.runtime.sendMessage({ getDiscounts: true })
 }
 
-// Fills the textarea with data from syncronized storage
+/**
+ * Fills the textarea with data from syncronized storage.
+ */
 function textareaCreate () {
   chrome.storage.sync.get('domainfilter', function (arraylist) {
     const list = arraylist.domainfilter || []
@@ -59,7 +65,9 @@ function textareaCreate () {
 }
 textareaCreate()
 
-// Saves the entered data textarea to syncronized storage
+/**
+ * Saves the entered data textarea to syncronized storage.
+ */
 function textareaSave () {
   let textarea = document.getElementById('domainFilter').value
   textarea = textarea.replace(/[\n\r]/g, ',') // reaplace newline with comma
@@ -83,7 +91,9 @@ function textareaSave () {
   chrome.storage.sync.set({ domainfilter: textarea })
 }
 
-// Initiate the different save functions on click
+/**
+ * Initiate the different save functions on click.
+ */
 document.getElementById('optionsSubmit').onclick = function () {
   formSave()
   textareaSave()

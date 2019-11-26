@@ -1,7 +1,9 @@
 /* global debuglog, chrome */
 debuglog('Popup: scrip is running!')
 
-// Listens for the corrent tab to puplish data to
+/**
+ * Listens for the corrent tab to puplish data to.
+ */
 document.addEventListener('DOMContentLoaded', function () {
   debuglog('DOM fully loaded and parsed')
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
@@ -14,8 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 }, false)
 
-// Desides how to fill the popup with content
-// content - Optional: Array of 1-4 string elemnts
+/**
+ * Desides how to fill the popup with content.
+ * @param {String} [content=null] Optional: Array of 1-4 string elemnts.
+ */
 function fillPopup (content = null) {
   debuglog('Populates popup now')
   if (Array.isArray(content)) {
@@ -27,11 +31,13 @@ function fillPopup (content = null) {
   }
 }
 
-// Generates elements for the each popop item
-// inTitel - String used as headline of item.
-// inSubtitel - String used as subtitel of item
-// inLink - Opttional: String used to make the item info a link html object
-// inBadge - Opttional: String used as make a badge on the item
+/**
+ * Generates elements for the each popop item.
+ * @param {String} inTitel - String used as headline of item.
+ * @param {String} inSubtitel - String used as subtitel of item.
+ * @param {String} [inLink=null] - String used to make the item info a link html object.
+ * @param {String} [inBadge=null] - String used as make a badge on the item.
+*/
 function popuplatePopup (inTitel, inSubtitel, inLink = null, inBadge = null) {
   const matchlist = document.getElementById('match-list')
   const newEntry = document.createElement('li')
@@ -49,8 +55,11 @@ function popuplatePopup (inTitel, inSubtitel, inLink = null, inBadge = null) {
   if (inLink) { makeLink([title, badge, content], newEntry, inLink) }
 }
 
-// Generates html content for the badge
-// text - String used as label inside badge
+/**
+ * Generates html content for the badge.
+ * @param {String} text - String used as label inside badge.
+ * @returns {object} - HTML object for the badge
+ */
 function makeBadge (text) {
   // Make a badge element, with input as its text
   if (!text) { return }
@@ -61,10 +70,12 @@ function makeBadge (text) {
   return badge
 }
 
-// Transform popup item into a link. Must move all items inside a new <a> element
-// children - Array of html objects
-// newEntry - HTML object for the opup item
-// inLink - String to use as the actual link
+/**
+ * Transform popup item into a link. Must move all items inside a new <a> element
+ * @param {Array} children - Array of html objects to move.
+ * @param {Object} newEntry - HTML object for the popup item.
+ * @param {String} inLink - String to use as the actual link.
+ */
 function makeLink (children, newEntry, inLink) {
   // Transforms list obejct to a link
   const newA = document.createElement('a')
