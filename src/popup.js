@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**
  * Desides how to fill the popup with content.
- * @param {String} [content=null] Optional: Array of 1-4 string elemnts.
+ * @param {Array} [content=null] Array of 4 string elemnts.
  */
 function fillPopup (content = null) {
   debuglog('Populates popup now')
