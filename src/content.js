@@ -36,10 +36,10 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
   for (const membership of membershipsarray.memberships || []) {
     promises.push(new Promise(resolve => {
       setTimeout(resolve, 2000)
-      const arrayName = DiscountServices[membership][0].arrayName
-      chrome.storage.local.get([arrayName], function (list) {
+      const arrayName = DiscountServices[membership].arrayName
+      chrome.storage.local.get(arrayName, function (list) {
         const holder = []
-        for (const item of list[[arrayName]]) {
+        for (const item of list[arrayName]) {
           if (item[0] === tabdomainname) {
             item.push(membership)
             holder.push(item)
@@ -83,7 +83,7 @@ function handelMatches (matchHolder) {
       const shop = matchHolder[0][1]
       const discount = matchHolder[0][2]
       const link = matchHolder[0][3] // Link for popup
-      const service = '<a href=" //' + link + '"><font style="">' + matchHolder[0][4] + '</font></a>'
+      const service = '<a href="' + link + '"><font style="">' + matchHolder[0][4] + '</font></a>'
       text = shop + ' har ' + discount + ' igennem ' + service
     }
     makeTopPane(text)
