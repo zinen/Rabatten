@@ -12,13 +12,13 @@ function formCreate () {
       const newP = document.createElement('p')
       const newLabel = document.createElement('label')
       newLabel.className = 'check-container'
-      newLabel.innerText = key
+      newLabel.innerText = DiscountServices[key].name
       const checkbox = document.createElement('input')
       checkbox.type = 'checkbox'
       checkbox.checked = list.includes(key) === true
       checkbox.name = key
       const newA = document.createElement('a')
-      newA.href = DiscountServices[key][0].homepage
+      newA.href = DiscountServices[key].homepage
       newA.innerText = '[link]'
       const newspan = document.createElement('span')
       newspan.className = 'checkmark'
