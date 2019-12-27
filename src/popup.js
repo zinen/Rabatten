@@ -27,7 +27,7 @@ function fillPopup (content = null) {
       popuplatePopup(item[1], item[2], item[3], item[4])
     }
   } else {
-    popuplatePopup('No match on this site', 'Please report if this is wrong')
+    popuplatePopup('Ingen match på denne side', 'Reporter gerne hvis det er forkert')
   }
 }
 
@@ -85,7 +85,7 @@ function makeLink (children, newEntry, inLink) {
   }
   newEntry.appendChild(newA)
   newA.classList.add('nounderline')
-  newA.setAttribute('href', 'https://' + inLink)
+  newA.setAttribute('href', inLink)
   newA.setAttribute('title', 'Open link')
   newEntry.classList.add('is-link')
   // Add lister to redirect tab page on click in popup window
@@ -93,7 +93,7 @@ function makeLink (children, newEntry, inLink) {
     // Only update url if left mouse button is pressed. This means that middel click
     // will open the url in a new tab, and not do a url update on the current tab
     if (e.which === 1) {
-      chrome.tabs.update({ url: 'https://' + inLink })
+      chrome.tabs.update({ url: inLink })
     }
   })
 }

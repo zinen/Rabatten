@@ -12,14 +12,13 @@ function formCreate () {
       const newP = document.createElement('p')
       const newLabel = document.createElement('label')
       newLabel.className = 'check-container'
-      newLabel.innerText = key
+      newLabel.innerText = DiscountServices[key].name
       const checkbox = document.createElement('input')
       checkbox.type = 'checkbox'
       checkbox.checked = list.includes(key) === true
-      console.log(checkbox.checked)
       checkbox.name = key
       const newA = document.createElement('a')
-      newA.href = DiscountServices[key][0].homepage
+      newA.href = DiscountServices[key].homepage
       newA.innerText = '[link]'
       const newspan = document.createElement('span')
       newspan.className = 'checkmark'
@@ -79,7 +78,7 @@ function textareaSave () {
       continue
     }
     if (dotCount > 1) {
-      textarea[i] = textarea[i].replace(/^\w+:?\/\/w?w?w?\.?([^/]+)\/?.*$/, '$1').split('.') // Rremoves www and everything after domian name
+      textarea[i] = textarea[i].replace(/^\w+:?\/\/(?:www\.)?\.?([^/]+)\/?.*$/, '$1').split('.') // Rremoves www and everything after domian name
       if (textarea[i][textarea[i].length - 1] === 'uk') {
         // Fix for uk domains, cant handel domain suffixes with only ".uk" but will handle domains like ".co.uk"
         textarea[i] = textarea[i].slice(-3).join('.')

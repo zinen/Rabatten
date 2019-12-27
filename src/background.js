@@ -44,6 +44,8 @@ chrome.runtime.onInstalled.addListener(async function () {
       }
     }
   }
+  // New settings avalible in version 1.1.0', will promt to show
+  if (settings.version !== '1.1.0') { optionsOpen = true }
   if (JSON.stringify(settings) !== JSON.stringify(startSettings)) {
     debuglog('Creating settings now')
     for (const key in settings) {
@@ -112,16 +114,10 @@ async function getDiscounts () {
   chrome.storage.sync.get('memberships', function (items) {
     const servicses = items.memberships || []
     for (const service of servicses) {
-      window.fetch(DiscountServices[service][0].databaseURL)
-        .then(response => response.text())
+      window.fetch(DiscountServices[service].databaseURL)
+        .then(response => response.json())
         .then(input => {
-          // replace singel quotes with double quotes
-          // removes semicolons
-          input = input.replace(/'/g, '"').replace(/;/g, '')
-          return JSON.parse(input)
-        })
-        .then(input => {
-          chrome.storage.local.set({ [DiscountServices[service][0].arrayName]: input }, function () {
+          chrome.storage.local.set({ [DiscountServices[service].arrayName]: input }, function () {
             debuglog('Data for: ' + service + ' is updated')
           })
         })
