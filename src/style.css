@@ -1,6 +1,24 @@
-body {
+@media only screen and (max-width: 400px) {
+  body {
+    margin: 0;
+  }
+}
+@media only screen and (min-width: 401px) {
+  body {
+    background-color: #ededed;
+  }
+  #page-content {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+#page-content {
   min-width: 300px;
-  margin: 0
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
 }
 header {
   display: flex;
@@ -49,7 +67,7 @@ button {
 }
 footer {
   display: flex;
-  margin: 4px
+  padding: 4px
 }
 textarea {
   font-size: 16px;
