@@ -13,22 +13,22 @@ function debuglog (input) { // eslint-disable-line
  * Common shared data
  */
 const DiscountServices = { // eslint-disable-line
-  forbrugsforeningen: [{
+  forbrugsforeningen: {
     name: 'Forbrugsforeningen',
     arrayName: 'array_forbrugsforeningen',
     databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/forbrugsforeningen.json',
     homepage: 'http://forbrugsforeningen.dk'
-  }],
-  logbuy: [{
+  },
+  logbuy: {
     name: 'LogBuy',
     arrayName: 'array_logbuy',
     databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/logbuy.json',
     homepage: 'http://logbuy.com'
-  }],
-  coop: [{
+  },
+  coop: {
     name: 'Coop partner fordele',
     arrayName: 'array_coop',
     databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/coop.json',
     homepage: 'https://partnerfordele.coop.dk/'
-  }]
+  }
 }
