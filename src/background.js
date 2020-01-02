@@ -19,7 +19,7 @@ chrome.runtime.onInstalled.addListener(async function () {
       })
     })
   }
-  // Known data settings, and their default values
+  // Known data keys, and their default values
   const knownSettings = {
     version: null, // Does nothing
     memberships: '_options', // Special case, opens settingspage
@@ -56,7 +56,7 @@ chrome.runtime.onInstalled.addListener(async function () {
     const optionsUrl = chrome.extension.getURL('/options.html')
     chrome.tabs.create({ url: optionsUrl })
   } else {
-    // If all was settings is okay, without need for manual updating of varibles
+    // If all settings is okay, without need for manual updating deined options
     // then get updated list of memberships
     getDiscounts()
   }

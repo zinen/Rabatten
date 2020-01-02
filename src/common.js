@@ -26,7 +26,7 @@ const DiscountServices = { // eslint-disable-line
     homepage: 'http://logbuy.com'
   },
   coop: {
-    name: 'Coop partner fordele',
+    name: 'Coop partnerfordele',
     arrayName: 'array_coop',
     databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/coop.json',
     homepage: 'https://partnerfordele.coop.dk/'
