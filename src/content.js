@@ -1,5 +1,4 @@
-/* global debuglog, chrome, DiscountServices */
-debuglog('Content: script is running!')
+console.log('Content: script is running!')
 let ignoredomain
 
 let tabdomainname = document.domain.split('.')
@@ -10,7 +9,7 @@ if (tabdomainname[tabdomainname.length - 1] === 'uk') {
   tabdomainname = tabdomainname.slice(-2).join('.')
 }
 
-debuglog('Content: domain name: ' + tabdomainname)
+console.log('Content: domain name: ' + tabdomainname)
 
 /**
  * Get last URL, from which this discount banner was closed on, and store it.
@@ -20,7 +19,7 @@ try {
     chrome.storage.sync.get('domainfilter', function (arraylist) {
       ignoredomain = arraylist.domainfilter || []
       ignoredomain.push(result.rabat_closed)
-      debuglog('Content: Ignore domain: ' + ignoredomain)
+      console.log('Content: Ignore domain: ' + ignoredomain)
     })
   })
 } catch (err) {
@@ -68,7 +67,7 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
  */
 function handelMatches (matchHolder) {
   if (!ignoredomain.includes(tabdomainname)) {
-    debuglog('Content: matchholder info used')
+    console.log('Content: matchholder info used')
     let text
     if (matchHolder.length > 1) {
       text = tabdomainname + ' har flere tilbud igennem ' + matchHolder[0][4]
@@ -114,9 +113,9 @@ function makeTopPane (text) {
   elem.addEventListener('click', function () {
     elem.parentNode.parentNode.parentNode.remove()
     chrome.storage.local.set({ rabat_closed: tabdomainname }, function () {
-      debuglog('Content: Close button domain name: ' + tabdomainname)
+      console.log('Content: Close button domain name: ' + tabdomainname)
     })
   })
 }
 
-debuglog('Content: script end.')
+console.log('Content: script end.')

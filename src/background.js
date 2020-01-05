@@ -1,6 +1,4 @@
-/* global debuglog, chrome, DiscountServices */
-debuglog('Background: scrip is running!')
-
+console.log('Background: script is running!')
 /**
  * Runs on installaton in the browser.
  */
@@ -39,7 +37,7 @@ chrome.runtime.onInstalled.addListener(async function () {
           console.error('Special case, unkown')
         }
       } else {
-        debuglog('Data: ' + key + ' is missing from settings, added now')
+        console.log('Data: ' + key + ' is missing from settings, added now')
         settings[key] = knownSettings[key]
       }
     }
@@ -47,7 +45,7 @@ chrome.runtime.onInstalled.addListener(async function () {
   // New settings avalible in version 1.1.0', will promt to show
   if (settings.version !== '1.1.0') { optionsOpen = true }
   if (JSON.stringify(settings) !== JSON.stringify(startSettings)) {
-    debuglog('Creating settings now')
+    console.log('Creating settings now')
     for (const key in settings) {
       await setStorageSync(key, settings[key])
     }
@@ -80,7 +78,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   // Respons with needed data
   if (message.matchHolder) {
     // Used to receive message from content about a page match
-    debuglog('Badge text set!')
+    console.log('Badge text set!')
     chrome.browserAction.setBadgeText({ text: '!', tabId: sender.tab.id })
     chrome.storage.local.get('matchHolder', function (content) {
       const matchHolder = content.matchHolder || {}
@@ -98,12 +96,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     getDiscounts()
   } else {
     // Debug any unkown incoming messages
-    debuglog('1 of 3 - Debug message')
-    debuglog(message)
-    debuglog('2 of 3 - Debug sender:')
-    debuglog(sender)
-    debuglog('3 of 3 - Debug sendResponse:')
-    debuglog(sendResponse)
+    console.log('1 of 3 - Debug message')
+    console.log(message)
+    console.log('2 of 3 - Debug sender:')
+    console.log(sender)
+    console.log('3 of 3 - Debug sendResponse:')
+    console.log(sendResponse)
   }
 })
 
@@ -118,7 +116,7 @@ async function getDiscounts () {
         .then(response => response.json())
         .then(input => {
           chrome.storage.local.set({ [DiscountServices[service].arrayName]: input }, function () {
-            debuglog('Data for: ' + service + ' is updated')
+            console.log('Data for: ' + service + ' is updated')
           })
         })
         .catch(err => console.error(err))
@@ -126,4 +124,4 @@ async function getDiscounts () {
   })
 }
 
-debuglog('Background: scrip end.')
+console.log('Background: script end.')

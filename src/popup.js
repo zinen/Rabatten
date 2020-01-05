@@ -1,11 +1,10 @@
-/* global debuglog, chrome */
-debuglog('Popup: scrip is running!')
+console.log('Popup: script is running!')
 
 /**
  * Listens for the corrent tab to puplish data to.
  */
 document.addEventListener('DOMContentLoaded', function () {
-  debuglog('DOM fully loaded and parsed')
+  console.log('DOM fully loaded and parsed')
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tab) {
     if (tab === null) { return }
     chrome.storage.local.get('matchHolder', function (content) {
@@ -21,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
  * @param {Array} [content=null] Array of 4 string elemnts.
  */
 function fillPopup (content = null) {
-  debuglog('Populates popup now')
+  console.log('Populates popup now')
   if (Array.isArray(content)) {
     for (const item of content) {
       popuplatePopup(item[1], item[2], item[3], item[4])
@@ -98,4 +97,4 @@ function makeLink (children, newEntry, inLink) {
   })
 }
 
-debuglog('Popup: scrip end.')
+console.log('Popup: script end.')

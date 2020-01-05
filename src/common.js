@@ -1,18 +1,7 @@
-const debug = false
-/**
- * Debug function used for development.
- * @param {any} input - Any data type to log to the console.
- */
-function debuglog (input) { // eslint-disable-line
-  if (debug) {
-    console.log(input)
-  }
-}
-
 /**
  * Common shared data
  */
-const DiscountServices = { // eslint-disable-line
+const DiscountServices = {
   forbrugsforeningen: {
     name: 'Forbrugsforeningen',
     arrayName: 'array_forbrugsforeningen',

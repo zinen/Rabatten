@@ -1,5 +1,4 @@
-/* global debuglog, chrome, DiscountServices */
-debuglog('Options: scrip is running!')
+console.log('Options: script is running!')
 
 /**
  * Makess a checklist from content of array.
@@ -54,12 +53,7 @@ function formSave () {
 function textareaCreate () {
   chrome.storage.sync.get('domainfilter', function (arraylist) {
     const list = arraylist.domainfilter || []
-    let text = ''
-    for (const item of list) {
-      text += item + ','
-    }
-    text = text.slice(0, -1)
-    document.getElementById('domainFilter').value = text
+    document.getElementById('domainFilter').value = list.join(', ')
   })
 }
 textareaCreate()
@@ -99,4 +93,4 @@ document.getElementById('optionsSubmit').onclick = function () {
   chrome.storage.sync.set({ version: (chrome.runtime.getManifest()).version })
   window.close()
 }
-debuglog('Options: scrip end.')
+console.log('Options: script end.')

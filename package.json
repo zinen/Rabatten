@@ -7,12 +7,12 @@
   "scripts": {
     "npm:reinstall": "rimraf node_modules && npm cache clean && npm install",
     "lint": "standard --fix src/**.js && standard --verbose src/**.js && cleancss --format beautify src/style.css -o src/style.css",
-    "uglify:background": "mkdirp build && terser src/background.js -m -o build/background.js",
-    "uglify:common": "mkdirp build && terser src/common.js -m -o build/common.js",
-    "uglify:content": "mkdirp build && terser src/content.js -m -o build/content.js",
-    "uglify:options": "mkdirp build && terser src/options.js -m -o build/options.js",
-    "uglify:popup": "mkdirp build && terser src/popup.js -m -o build/popup.js",
-    "uglify:css":"cleancss src/style.css -o build/style.css",
+    "uglify:background": "mkdirp build && terser src/background.js -m -c drop_console  -o build/background.js",
+    "uglify:common": "mkdirp build && terser src/common.js -m -c drop_console -o build/common.js",
+    "uglify:content": "mkdirp build && terser src/content.js -m -c drop_console  -o build/content.js",
+    "uglify:options": "mkdirp build && terser src/options.js -m -c drop_console  -o build/options.js",
+    "uglify:popup": "mkdirp build && terser src/popup.js -m -c drop_console  -o build/popup.js",
+    "uglify:css": "cleancss src/style.css -o build/style.css",
     "uglify:all": "npm run uglify:background && npm run uglify:common && npm run uglify:content && npm run uglify:options && npm run uglify:popup && npm run uglify:css",
     "copy:all": "ncp src/ build/",
     "utils:version": "node utils/manifest-version.js",
@@ -40,8 +40,9 @@
     "standard": "^14.3.1",
     "terser": "^4.3.9"
   },
-  "standard.options": {
+  "standard": {
     "globals": [
+      "DiscountServices",
       "chrome"
     ],
     "ignore": [
