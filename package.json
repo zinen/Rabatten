@@ -34,6 +34,7 @@
     "chrome-webstore-upload-cli": "*",
     "clean-css-cli": "*",
     "dotenv": "*",
+    "eslint": "*",
     "mkdirp": "*",
     "ncp": "*",
     "rimraf": "*",
