@@ -51,9 +51,7 @@
     "plugins": [
       "html"
     ],
-    "parser": "babel-eslint",
     "envs": [
-      "jest"
     ]
   }
 }
