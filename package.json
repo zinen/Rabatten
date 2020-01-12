@@ -31,15 +31,14 @@
   },
   "homepage": "https://github.com/zinen/Rabatten#readme",
   "devDependencies": {
-    "chrome-webstore-upload-cli": "^1.2.0",
-    "clean-css-cli": "^4.3.0",
-    "dotenv": "^8.2.0",
-    "eslint": "^6.6.0",
-    "mkdirp": "^0.5.1",
-    "ncp": "^2.0.0",
-    "rimraf": "^3.0.0",
-    "standard": "^14.3.1",
-    "terser": "^4.3.9"
+    "chrome-webstore-upload-cli": "*",
+    "clean-css-cli": "*",
+    "dotenv": "*",
+    "mkdirp": "*",
+    "ncp": "*",
+    "rimraf": "*",
+    "standard": "*",
+    "terser": "*"
   },
   "standard": {
     "globals": [
