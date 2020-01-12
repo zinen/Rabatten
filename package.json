@@ -49,9 +49,7 @@
     "ignore": [
       "node_modules/**"
     ],
-    "plugins": [
-    ],
-    "envs": [
-    ]
+    "plugins": [],
+    "envs": []
   }
 }
