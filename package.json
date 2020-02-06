@@ -18,7 +18,7 @@
     "utils:version": "node utils/manifest-version.js",
     "build": "rimraf build/ && npm run utils:version && npm run copy:all && npm run uglify:all",
     "upload:chrome": "node -r dotenv/config.js ./node_modules/chrome-webstore-upload-cli/index.js upload --source ./build",
-    "monitor:test": "nodemon  --inspect ./test/index.test.js"
+    "test": "node ./test/index.test.js"
   },
   "repository": {
     "type": "git",
