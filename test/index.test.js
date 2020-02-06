@@ -3,23 +3,26 @@ const assert = require('assert')
 const puppeteer = require('puppeteer')
 const rewire = require('rewire')
 
-// Controlled test data
-const knowData = [
+// Controlled test data for content of top pane
+const topPaneData = [
   {
     webpage: 'https://bauhaus.dk/',
-    expectedResult: 'Testdata1 har 101 % igennem forbrugsforeningenX'
+    expectedTextContent: 'Testdata1-1 har 101 % igennem forbrugsforeningenX'
   },
   {
     webpage: 'https://www.ticketmaster.dk/',
-    expectedResult: 'ticketmaster.dk har flere tilbud igennem forbrugsforeningenX'
+    expectedTextContent: 'ticketmaster.dk har flere tilbud igennem forbrugsforeningenX'
   },
   {
     webpage: 'https://cewe.dk/',
-    expectedResult: 'Testdata5 har 105 % igennem logbuyX'
+    expectedTextContent: 'Testdata2-5 har 105 % igennem logbuyX'
   },
   {
     webpage: 'https://silvan.dk/',
-    expectedResult: 'silvan.dk har tilbud igennem flere udbydereX'
+    expectedTextContent: 'silvan.dk har tilbud igennem flere udbydereX'
+  },
+  {
+    webpage: 'https://taenk.dk/'
   }
 ]
 async function delay (msSec) {
@@ -54,22 +57,25 @@ async function delay (msSec) {
     // Inject controlled data from external resource
     extensionBackgroundPage.on('request', request => {
       if (request._url === DiscountServices.forbrugsforeningen.databaseURL) {
+        // Make fake data for forbrugsforeningen
         request.respond({
           status: 200,
           contentType: 'text/plain',
           body: `[
-                ["bauhaus.dk", "Testdata1", "101 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
-                ["ticketmaster.dk", "Testdata2", "102 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
-                ["ticketmaster.dk", "Testdata3", "103 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
-                ["silvan.dk", "Testdata4", "104 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]
+                ["bauhaus.dk", "Testdata1-1", "101 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["ticketmaster.dk", "Testdata1-2", "102 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["ticketmaster.dk", "Testdata1-3", "103 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["silvan.dk", "Testdata1-4", "104 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["taenk.dk", "Testdata1-5", "104 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]
               ]`
         })
       } else if (request._url === DiscountServices.logbuy.databaseURL) {
+        // Make fake data for logbuy
         request.respond({
           status: 200,
           contentType: 'text/plain',
-          body: '[["cewe.dk", "Testdata5", "105 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"], ' +
-                '["silvan.dk", "Testdata6", "106 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]]'
+          body: '[["cewe.dk", "Testdata2-5", "105 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"], ' +
+                '["silvan.dk", "Testdata2-6", "106 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]]'
         })
       } else {
         request.continue()
@@ -77,7 +83,7 @@ async function delay (msSec) {
     })
     const extensionOptionsPage = await extensionOptionsPageTarget.page()
     const extensionOptionsURL = extensionOptionsPageTarget !== undefined ? extensionOptionsPageTarget.url() : undefined
-    assert(extensionOptionsURL !== undefined, new Error('Options page is not found'))
+    assert(extensionOptionsURL !== undefined, 'Options page is not found')
     // Get values af check boxes
     const checkBoxValues = await extensionOptionsPage.$$eval('#check-list label', els => {
       return els.map(el => el.innerText)
@@ -86,7 +92,7 @@ async function delay (msSec) {
     // Get values of what should be inside check boxes
     const checkBoxValuesExpect = Object.keys(DiscountServices).map(key => DiscountServices[key].name)
     // Test: Confirm that checkboxes contain the expected values
-    assert.deepStrictEqual(checkBoxValues, checkBoxValuesExpect)
+    assert.deepStrictEqual(checkBoxValues, checkBoxValuesExpect, 'Text: On settings page, content of service choises is wrong')
     // Check all the checkboxes
     const checkList = await extensionOptionsPage.$$('#check-list label')
     for await (const check of checkList) {
@@ -95,9 +101,14 @@ async function delay (msSec) {
     // Click save, this also should close the optionspage
     await extensionOptionsPage.click('#optionsSubmit')
     // Check 3 sites for expected content in the top panel
-    for await (const testObject of knowData) {
-      const scrapedContent = await goToDiscountPage(testObject.webpage, browser)
-      assert.strictEqual(scrapedContent, testObject.expectedResult)
+    for await (const testObject of topPaneData) {
+      const scrapedContent = await getTopPaneData(testObject.webpage, browser)
+      if (testObject.expectedTextContent) {
+        assert.strictEqual(scrapedContent.textContent, testObject.expectedTextContent, 'Text: Content of toppane is wrong')
+      }
+      assert.strictEqual(scrapedContent.styleOffsetLeft, 0, 'Style: Left offset of toppane is wrong')
+      assert.strictEqual(scrapedContent.styleOffsetTop, 1, 'Style: Top offset of toppane is wrong')
+      assert.strictEqual(scrapedContent.styleHeight, 28, 'Style: Height of toppane is wrong')
     }
     console.log('\x1b[92mAll checks succeded\x1b[39m')
     await browser.close()
@@ -107,9 +118,8 @@ async function delay (msSec) {
     console.log('-----------')
   }
 })()
-async function goToDiscountPage (URL, browser) {
+async function getTopPaneData (URL, browser) {
   const page = await browser.newPage()
-  // await page.goto('https://bauhaus.dk/', { waitUntil: 'domcontentloaded' })
   await page.goto(URL, { waitUntil: 'networkidle2' })
   // Wait for 1 second
   await page.waitFor(1000)
@@ -117,7 +127,13 @@ async function goToDiscountPage (URL, browser) {
     for (const div of divs) {
       // Search to find the correct div
       if (div.shadowRoot && div.shadowRoot.querySelector('#aso12909')) {
-        return div.shadowRoot.querySelector('#aso12909').textContent.trim()
+        const divInScope = div.shadowRoot.querySelector('#aso12909')
+        return {
+          textContent: divInScope.textContent.trim(),
+          styleOffsetLeft: divInScope.offsetLeft,
+          styleOffsetTop: divInScope.offsetTop,
+          styleHeight: divInScope.clientHeight
+        }
       }
     }
   })
