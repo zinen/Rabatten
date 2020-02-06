@@ -6,22 +6,27 @@ const rewire = require('rewire')
 // Controlled test data for content of top pane
 const topPaneData = [
   {
+    // Test for service 1
     webpage: 'https://bauhaus.dk/',
     expectedTextContent: 'Testdata1-1 har 101 % igennem forbrugsforeningenX'
   },
   {
-    webpage: 'https://www.ticketmaster.dk/',
-    expectedTextContent: 'ticketmaster.dk har flere tilbud igennem forbrugsforeningenX'
-  },
-  {
+    // Test for service 2
     webpage: 'https://cewe.dk/',
     expectedTextContent: 'Testdata2-5 har 105 % igennem logbuyX'
   },
   {
+    // Test for multible discounts
+    webpage: 'https://www.ticketmaster.dk/',
+    expectedTextContent: 'ticketmaster.dk har flere tilbud igennem forbrugsforeningenX'
+  },
+  {
+    // Test for toppane top offset 0
     webpage: 'https://silvan.dk/',
     expectedTextContent: 'silvan.dk har tilbud igennem flere udbydereX'
   },
   {
+    // Test for toppane left offset 0
     webpage: 'https://taenk.dk/'
   }
 ]
@@ -107,7 +112,7 @@ async function delay (msSec) {
         assert.strictEqual(scrapedContent.textContent, testObject.expectedTextContent, 'Text: Content of toppane is wrong')
       }
       assert.strictEqual(scrapedContent.styleOffsetLeft, 0, 'Style: Left offset of toppane is wrong')
-      assert.strictEqual(scrapedContent.styleOffsetTop, 1, 'Style: Top offset of toppane is wrong')
+      assert.strictEqual(scrapedContent.styleOffsetTop, 0, 'Style: Top offset of toppane is wrong')
       assert.strictEqual(scrapedContent.styleHeight, 28, 'Style: Height of toppane is wrong')
     }
     console.log('\x1b[92mAll checks succeded\x1b[39m')
