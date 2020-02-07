@@ -42,6 +42,7 @@ async function delay (msSec) {
   try {
     const pathToExtension = require('path').join(__dirname, '../build/')
     const browser = await puppeteer.launch({
+      executablePath: process.env.PUPPETEER_EXEC_PATH,
       headless: false,
       args: [
         `--disable-extensions-except=${pathToExtension}`,
