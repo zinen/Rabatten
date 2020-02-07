@@ -45,7 +45,7 @@ async function delay (msSec) {
       executablePath: process.env.PUPPETEER_EXEC_PATH,
       headless: false,
       args: [
-        '--no-sandbox',
+        // '--no-sandbox',
         `--disable-extensions-except=${pathToExtension}`,
         `--load-extension=${pathToExtension}`,
         '--lang=da-DK',
@@ -123,6 +123,7 @@ async function delay (msSec) {
     console.log('---Error---')
     console.log(error)
     console.log('-----------')
+    process.exitCode = 1
   }
 })()
 async function getTopPaneData (URL, browser) {
