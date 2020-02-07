@@ -45,6 +45,7 @@ async function delay (msSec) {
       executablePath: process.env.PUPPETEER_EXEC_PATH,
       headless: false,
       args: [
+        '--no-sandbox',
         `--disable-extensions-except=${pathToExtension}`,
         `--load-extension=${pathToExtension}`,
         '--lang=da-DK',
