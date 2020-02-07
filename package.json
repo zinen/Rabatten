@@ -32,8 +32,7 @@
     "url": "https://github.com/zinen/Rabatten/issues"
   },
   "homepage": "https://github.com/zinen/Rabatten#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chrome-webstore-upload-cli": "*",
     "clean-css-cli": "*",
