@@ -42,8 +42,6 @@ chrome.runtime.onInstalled.addListener(async function () {
       }
     }
   }
-  // New settings avalible in version 1.1.0', will promt to show
-  if (settings.version !== '1.1.0') { optionsOpen = true }
   if (JSON.stringify(settings) !== JSON.stringify(startSettings)) {
     console.log('Creating settings now')
     for (const key in settings) {

@@ -1,7 +1,7 @@
 /**
  * Common shared data
  */
-const DiscountServices = {
+const DiscountServices = { // eslint-disable-line no-unused-vars
   forbrugsforeningen: {
     name: 'Forbrugsforeningen',
     arrayName: 'array_forbrugsforeningen',
