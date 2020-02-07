@@ -5,7 +5,8 @@
   "private": true,
   "browser": "background.js",
   "scripts": {
-    "npm:reinstall": "rimraf node_modules && npm cache clean && npm install",
+    "npm:reinstall": "npm uninstall --no-save && npm cache verify && npm install --no-optional && npm install rewire -O",
+    "npm:global:puppeteer": "npm install puppeteer -g",
     "lint": "standard --fix src/**.js && standard --verbose src/**.js && cleancss --format beautify src/style.css -o src/style.css",
     "uglify:background": "mkdirp build && terser src/background.js -m -c drop_console  -o build/background.js",
     "uglify:common": "mkdirp build && terser src/common.js -m -c drop_console -o build/common.js",
@@ -43,7 +44,6 @@
     "dotenv": "^8.2.0"
   },
   "optionalDependencies": {
-    "nodemon": "^2.0.2",
     "puppeteer": "^2.0.0",
     "rewire": "^4.0.1"
   },
