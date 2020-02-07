@@ -4,23 +4,24 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@master
+    - name: Use Node.js
+      uses: actions/npm@master
+      env:
+        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
       with:
-        node-version: ${{ matrix.node-version }}
+        args: install
     - name: npm install, test JS standard and  build test app
       run: |
-        npm ci
         npm run lint --if-present
-        npm run build --if-present
+        npm run build
       env:
         CI: true
+    - name: Test Code
+      uses: mujo-code/puppeteer-headful@master
+      env:
+        CI: 'true'
+      with:
+        args: npm test
