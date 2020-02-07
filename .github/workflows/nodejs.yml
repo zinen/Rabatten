@@ -8,13 +8,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Use Node.js
-      uses: actions/npm@master
+      uses: actions/setup-node@v1
       env:
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-      with:
-        args: install
     - name: npm install, test JS standard and  build test app
       run: |
+        npm install
         npm run lint --if-present
         npm run build
       env:
