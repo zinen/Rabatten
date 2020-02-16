@@ -14,6 +14,7 @@ For mere info, klik på ikonet øverst i højre hjørne når en blå indikator v
 [Available in the chrome webshop](https://chrome.google.com/webstore/detail/rabatten/ekaaoiehoehhfffifhgclflhjjkppdnc/).
 
 ## How the extension works
+Some of the terminology require knowledge of [the workings of a browser extensions](https://developer.chrome.com/extensions).
 
 ### Options page
 In the options page, you define which services you want to see your discounts from. And you can specify filters on domains you don’t want to see the discount banner on.
@@ -21,7 +22,7 @@ Options are saved in chrome synchronized storage and thus made available to your
 *This requires a google account being logged in to chrome otherwise options are only saved localy.*
 
 ### Background page
-The background page is activated when new options are saved or when the browser starts. Once triggered, it will download the database with discounts for the services chosen on options page. 
+The background page is activated when new options are saved or when the browser starts. Once triggered, it will download the database with discounts for the services chosen on options page. The database of the discount is found [here at another git repo](https://github.com/zinen/rabatten-scraper#readme).
 
 The background page also enables the content script to send data to popup page.
 
