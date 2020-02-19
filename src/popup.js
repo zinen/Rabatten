@@ -42,13 +42,13 @@ function popuplatePopup (inTitel, inSubtitel, inLink = null, inBadge = null) {
   const newEntry = document.createElement('li')
   matchlist.appendChild(newEntry)
   const title = document.createElement('p')
-  title.classList.add('title2')
+  title.classList.add('listTitle')
   title.innerText = inTitel
   newEntry.appendChild(title)
   const badge = makeBadge(inBadge)
   if (badge) { newEntry.appendChild(badge) }
   const content = document.createElement('p')
-  content.classList.add('title3')
+  content.classList.add('listSubtitle')
   content.innerText = inSubtitel
   newEntry.appendChild(content)
   if (inLink) { makeLink([title, badge, content], newEntry, inLink) }
@@ -85,7 +85,7 @@ function makeLink (children, newEntry, inLink) {
   newEntry.appendChild(newA)
   newA.classList.add('nounderline')
   newA.setAttribute('href', inLink)
-  newA.setAttribute('title', 'Open link')
+  newA.setAttribute('listTitle', 'Open link')
   newEntry.classList.add('is-link')
   // Add lister to redirect tab page on click in popup window
   newEntry.addEventListener('mouseup', function (e) {
