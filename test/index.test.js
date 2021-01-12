@@ -8,25 +8,25 @@ const topPaneData = [
   {
     // Test for service 1
     webpage: 'https://bauhaus.dk/',
-    expectedTextContent: 'Testdata1-1 har 101 % igennem forbrugsforeningenX'
+    expectedTextContent: 'testData1-1 har 101 % igennem forbrugsforeningenX'
   },
   {
     // Test for service 2
     webpage: 'https://cewe.dk/',
-    expectedTextContent: 'Testdata2-5 har 105 % igennem logbuyX'
+    expectedTextContent: 'testData2-5 har 105 % igennem logbuyX'
   },
   {
-    // Test for multible discounts
+    // Test for multiple discounts
     webpage: 'https://www.ticketmaster.dk/',
     expectedTextContent: 'ticketmaster.dk har flere tilbud igennem forbrugsforeningenX'
   },
   {
-    // Test for toppane top offset 0
+    // Test for top pane top offset 0
     webpage: 'https://silvan.dk/',
     expectedTextContent: 'silvan.dk har tilbud igennem flere udbydereX'
   },
   {
-    // Test for toppane left offset 0
+    // Test for top pane left offset 0
     webpage: 'https://taenk.dk/'
   }
 ]
@@ -38,6 +38,11 @@ async function delay (msSec) {
 
 ;(async () => {
   const DiscountServices = rewire('../build/common.js').__get__('DiscountServices')
+  const ArrayOfDatabaseURL = []
+  Object.keys(DiscountServices).forEach((service) => {
+    ArrayOfDatabaseURL.push(DiscountServices[service].databaseURL)
+  })
+  console.log('ArrayOfDatabaseURL', ArrayOfDatabaseURL)
   await delay(1500)
   try {
     const pathToExtension = require('path').join(__dirname, '../build/')
@@ -69,11 +74,11 @@ async function delay (msSec) {
           status: 200,
           contentType: 'text/plain',
           body: `[
-                ["bauhaus.dk", "Testdata1-1", "101 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
-                ["ticketmaster.dk", "Testdata1-2", "102 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
-                ["ticketmaster.dk", "Testdata1-3", "103 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
-                ["silvan.dk", "Testdata1-4", "104 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
-                ["taenk.dk", "Testdata1-5", "104 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]
+                ["bauhaus.dk", "testData1-1", "101 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["ticketmaster.dk", "testData1-2", "102 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["ticketmaster.dk", "testData1-3", "103 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["silvan.dk", "testData1-4", "104 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"],
+                ["taenk.dk", "testData1-5", "104 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]
               ]`
         })
       } else if (request._url === DiscountServices.logbuy.databaseURL) {
@@ -81,8 +86,17 @@ async function delay (msSec) {
         request.respond({
           status: 200,
           contentType: 'text/plain',
-          body: '[["cewe.dk", "Testdata2-5", "105 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"], ' +
-                '["silvan.dk", "Testdata2-6", "106 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]]'
+          body: '[["cewe.dk", "testData2-5", "105 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"], ' +
+                '["silvan.dk", "testData2-6", "106 %", "https://www.forbrugsforeningen.dk/businesssearch//1001845759"]]'
+        })
+      } else if (ArrayOfDatabaseURL.includes(request._url)) {
+        // Make fate data for any other know service
+        console.log(`Request blocked for ${request._url}`)
+        // request.abort() // TODO: Fix this should not break the app
+        request.respond({
+          status: 200,
+          contentType: 'text/plain',
+          body: '[]'
         })
       } else {
         request.continue()
@@ -99,25 +113,27 @@ async function delay (msSec) {
     // Get values of what should be inside check boxes
     const checkBoxValuesExpect = Object.keys(DiscountServices).map(key => DiscountServices[key].name)
     // Test: Confirm that checkboxes contain the expected values
-    assert.deepStrictEqual(checkBoxValues, checkBoxValuesExpect, 'Text: On settings page, content of service choises is wrong')
+    assert.deepStrictEqual(checkBoxValues, checkBoxValuesExpect, 'Text: On settings page, content of service choices is wrong')
     // Check all the checkboxes
     const checkList = await extensionOptionsPage.$$('#check-list label')
     for await (const check of checkList) {
       await check.click()
     }
-    // Click save, this also should close the optionspage
+    // Click save, this also should close the options page
     await extensionOptionsPage.click('#optionsSubmit')
     // Check 3 sites for expected content in the top panel
     for await (const testObject of topPaneData) {
       const scrapedContent = await getTopPaneData(testObject.webpage, browser)
+      // console.log('testObject', testObject)
+      // console.log('scrapedContent', scrapedContent)
       if (testObject.expectedTextContent) {
-        assert.strictEqual(scrapedContent.textContent, testObject.expectedTextContent, 'Text: Content of toppane is wrong')
+        assert.strictEqual(scrapedContent.textContent, testObject.expectedTextContent, 'Text: Content of top pane is wrong')
       }
-      assert.strictEqual(scrapedContent.styleOffsetLeft, 0, 'Style: Left offset of toppane is wrong')
-      assert.strictEqual(scrapedContent.styleOffsetTop, 0, 'Style: Top offset of toppane is wrong')
-      assert.strictEqual(scrapedContent.styleHeight, 28, 'Style: Height of toppane is wrong')
+      assert.strictEqual(scrapedContent.styleOffsetLeft, 0, 'Style: Left offset of top pane is wrong')
+      assert.strictEqual(scrapedContent.styleOffsetTop, 0, 'Style: Top offset of top pane is wrong')
+      assert.strictEqual(scrapedContent.styleHeight, 28, 'Style: Height of top pane is wrong')
     }
-    console.log('\x1b[92mAll checks succeded\x1b[39m')
+    console.log('\x1b[92mAll checks succeeded\x1b[39m')
     await browser.close()
   } catch (error) {
     console.log('---Error---')
@@ -148,3 +164,6 @@ async function getTopPaneData (URL, browser) {
   await page.close()
   return scrapedContent
 }
+
+// Test domain ignore filter
+// Test handle not reaching cdn.jsdeliver. Currently it breaks the app.

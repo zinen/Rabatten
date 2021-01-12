@@ -1,25 +1,25 @@
 console.log('Content: script is running!')
-let ignoredomain
+let ignoreDomain
 
-let tabdomainname = document.domain.split('.')
-if (tabdomainname[tabdomainname.length - 1] === 'uk') {
+let tabDomainName = document.domain.split('.')
+if (tabDomainName[tabDomainName.length - 1] === 'uk') {
   // Fix for uk domains, cant handel domain suffixes with only ".uk" but will handle domains like ".co.uk"
-  tabdomainname = tabdomainname.slice(-3).join('.')
+  tabDomainName = tabDomainName.slice(-3).join('.')
 } else {
-  tabdomainname = tabdomainname.slice(-2).join('.')
+  tabDomainName = tabDomainName.slice(-2).join('.')
 }
 
-console.log('Content: domain name: ' + tabdomainname)
+console.log('Content: domain name: ' + tabDomainName)
 
 /**
  * Get last URL, from which this discount banner was closed on, and store it.
  */
 try {
-  chrome.storage.local.get('rabat_closed', function (result) {
-    chrome.storage.sync.get('domainfilter', function (arraylist) {
-      ignoredomain = arraylist.domainfilter || []
-      ignoredomain.push(result.rabat_closed)
-      console.log('Content: Ignore domain: ' + ignoredomain)
+  chrome.storage.local.get('rabatClosed', function (result) {
+    chrome.storage.sync.get('domainfilter', function (arrayList) {
+      ignoreDomain = arrayList.domainfilter || []
+      ignoreDomain.push(result.rabat_closed)
+      console.log('Content: Ignore domain: ' + ignoreDomain)
     })
   })
 } catch (err) {
@@ -29,17 +29,17 @@ try {
 /**
  * Initiate the loop of the chosen services.
  */
-chrome.storage.sync.get('memberships', function (membershipsarray) {
+chrome.storage.sync.get('memberships', function (membershipsArray) {
   const promises = []
   // Loop membership and note them in a promise
-  for (const membership of membershipsarray.memberships || []) {
+  for (const membership of membershipsArray.memberships || []) {
     promises.push(new Promise(resolve => {
       setTimeout(resolve, 2000)
       const arrayName = DiscountServices[membership].arrayName
       chrome.storage.local.get(arrayName, function (list) {
         const holder = []
         for (const item of list[arrayName]) {
-          if (item[0] === tabdomainname) {
+          if (item[0] === tabDomainName) {
             item.push(membership)
             holder.push(item)
           }
@@ -53,7 +53,7 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
     matches = matches.reduce((flatten, arr) => [...flatten, ...arr], [])
     if (matches.length > 0) {
       // Notify the background script of a match
-      chrome.runtime.sendMessage({ rabatmatch: true, matchHolder: matches })
+      chrome.runtime.sendMessage({ rabatMatch: true, matchHolder: matches })
       handelMatches(matches)
     }
   }, function (err) {
@@ -66,15 +66,15 @@ chrome.storage.sync.get('memberships', function (membershipsarray) {
  * @param {Array} matchHolder - Array with arrays holding the matches.
  */
 function handelMatches (matchHolder) {
-  if (!ignoredomain.includes(tabdomainname)) {
-    console.log('Content: matchholder info used')
+  if (!ignoreDomain.includes(tabDomainName)) {
+    console.log('Content: match holder info used')
     let text
     if (matchHolder.length > 1) {
-      text = tabdomainname + ' har flere tilbud igennem ' + matchHolder[0][4]
+      text = tabDomainName + ' har flere tilbud igennem ' + matchHolder[0][4]
       // Look if more then one service has discount on the page
       for (let i = 0; i < matchHolder.length - 1; i++) {
         if (matchHolder[i][4] !== matchHolder[i + 1][4]) {
-          text = tabdomainname + ' har tilbud igennem flere udbydere'
+          text = tabDomainName + ' har tilbud igennem flere udbydere'
           break
         }
       }
@@ -94,9 +94,9 @@ function handelMatches (matchHolder) {
  * @param {String} text - String with HTML code in raw text
  */
 function makeTopPane (text) {
-  const newdiv = document.createElement('div')
-  newdiv.style = 'all:initial'
-  newdiv.innerHTML =
+  const newDiv = document.createElement('div')
+  newDiv.style = 'all:initial'
+  newDiv.innerHTML =
     '<div id="aso12909" style="width:100%;padding-right:10px;padding-left:10px;background-color:rgba(244,230,155,0.8);position: fixed;box-shadow: 0 2px 6px #3C4A54;z-index:9999999;left:0;top:0;">\n' +
     '<font style="font-size:20px;font-family:Arial;">' +
     '<img src="' + chrome.runtime.getURL('icon48.png') + '" alt="" style="margin-left:0px; margin-top:0px; margin-right:4px; width:28px; height:28px; vertical-align:sub;display:inline-block" />' +
@@ -104,16 +104,16 @@ function makeTopPane (text) {
     '</font>\n' +
     '</div>\n'
   // Append div as the first child of body
-  const shadowdiv = document.createElement('div')
-  document.body.insertBefore(shadowdiv, document.body.firstChild)
-  const shadow = shadowdiv.attachShadow({ mode: 'open' })
-  shadow.appendChild(newdiv)
+  const shadowDiv = document.createElement('div')
+  document.body.insertBefore(shadowDiv, document.body.firstChild)
+  const shadow = shadowDiv.attachShadow({ mode: 'open' })
+  shadow.appendChild(newDiv)
   // Make close button function
   const elem = shadow.getElementById('aso12910')
   elem.addEventListener('click', function () {
     elem.parentNode.parentNode.parentNode.remove()
-    chrome.storage.local.set({ rabat_closed: tabdomainname }, function () {
-      console.log('Content: Close button domain name: ' + tabdomainname)
+    chrome.storage.local.set({ rabat_closed: tabDomainName }, function () {
+      console.log('Content: Close button domain name: ' + tabDomainName)
     })
   })
 }

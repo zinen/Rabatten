@@ -1,6 +1,6 @@
 console.log('Background: script is running!')
 /**
- * Runs on installaton in the browser.
+ * Runs on installation in the browser.
  */
 chrome.runtime.onInstalled.addListener(async function () {
   function getStorageSync (key) {
@@ -20,8 +20,8 @@ chrome.runtime.onInstalled.addListener(async function () {
   // Known data keys, and their default values
   const knownSettings = {
     version: null, // Does nothing
-    memberships: '_options', // Special case, opens settingspage
-    domainfilter: ['facebook.com', 'google.com', 'forbrugsforeningen.dk'] // For compatablity for installs before v0.1.0
+    memberships: '_options', // Special case, opens settings page
+    domainfilter: ['facebook.com', 'google.com', 'forbrugsforeningen.dk'] // For compatibility for installs before v0.1.0
   }
   let optionsOpen = false
   const settings = await getStorageSync(null)
@@ -34,7 +34,7 @@ chrome.runtime.onInstalled.addListener(async function () {
         if (knownSettings[key] === '_options') {
           optionsOpen = true
         } else {
-          console.error('Special case, unkown')
+          console.error('Special case, unknown')
         }
       } else {
         console.log('Data: ' + key + ' is missing from settings, added now')
@@ -52,7 +52,7 @@ chrome.runtime.onInstalled.addListener(async function () {
     const optionsUrl = chrome.extension.getURL('/options.html')
     chrome.tabs.create({ url: optionsUrl })
   } else {
-    // If all settings is okay, without need for manual updating deined options
+    // If all settings is okay, without need for manual updating denied options
     // then get updated list of memberships
     getDiscounts()
   }
@@ -72,8 +72,8 @@ chrome.runtime.onStartup.addListener(function () {
  * Handling of incoming messages from content and popup script.
  */
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  // Handels any incoming messeges between background, content, popup and options
-  // Respons with needed data
+  // Handles any incoming messages between background, content, popup and options
+  // Response with needed data
   if (message.matchHolder) {
     // Used to receive message from content about a page match
     console.log('Badge text set!')
@@ -93,7 +93,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     // By request of options page, initiate a new download of data
     getDiscounts()
   } else {
-    // Debug any unkown incoming messages
+    // Debug any unknown incoming messages
     console.log('1 of 3 - Debug message')
     console.log(message)
     console.log('2 of 3 - Debug sender:')
@@ -108,8 +108,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
  */
 async function getDiscounts () {
   chrome.storage.sync.get('memberships', function (items) {
-    const servicses = items.memberships || []
-    for (const service of servicses) {
+    const services = items.memberships || []
+    for (const service of services) {
       window.fetch(DiscountServices[service].databaseURL)
         .then(response => response.json())
         .then(input => {
