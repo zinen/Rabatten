@@ -1,9 +1,8 @@
 {
   "name": "rabatten",
-  "version": "1.1.1",
-  "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden\r Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.",
+  "version": "1.1.2",
+  "description": "Start med at vælge de sider du får rabat gennem. Herefter ser du en besked i toppen af hjemmesiderne med info omkring gældende rabat på netop denne hjemmeside.",
   "private": true,
-  "type": "browser",
   "browser": "background.js",
   "scripts": {
     "npm:reinstall": "npm uninstall --no-save && npm cache verify && npm install --no-optional && npm install rewire -O",

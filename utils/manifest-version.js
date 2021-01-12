@@ -4,7 +4,11 @@ const packageVersion = process.env.npm_package_version
 console.log('Node.js package version: ' + packageVersion)
 const file = 'src/manifest.json'
 
-function readWriteSync () {
+/**
+ * Updates the manifest inside /src/ folder to
+ * match the version stated in package.json
+ */
+function updateManifest () {
   let data = fs.readFileSync(file, 'utf-8')
   data = JSON.parse(data)
   console.log('Chrome extention manifest version: ' + data.version)
@@ -18,4 +22,4 @@ function readWriteSync () {
   }
 }
 
-readWriteSync()
+updateManifest()
