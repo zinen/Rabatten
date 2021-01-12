@@ -6,8 +6,9 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/zinen/Rabatten?branch=master)](https://bettercodehub.com/results/zinen/Rabatten)
 [![GitHub Actions status](https://github.com/zinen/Rabatten/workflows/Node%20CI/badge.svg)](https://github.com/zinen/Rabatten)
 
-Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden
-Start med at vælge de sider du får rabat via. Herefter ser du en poup i toppen af skærmen med info omkring rabat på de forskellige hjemmeside som du kan få rabat på.
+### Description (in danish)
+
+Start med at vælge de sider du får rabat gennem. Herefter ser du en besked i toppen af hjemmesiderne med info omkring gældende rabat på netop denne hjemmeside.
 
 For mere info, klik på ikonet øverst i højre hjørne når en blå indikator viser at der er rabat på siden.
 
