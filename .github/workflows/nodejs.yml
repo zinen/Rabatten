@@ -7,12 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+
+    - name: Create folder for log files
+      run: |
+          mkdir ./logs/screenshot/
+
     - name: Use Node.js
       uses: actions/setup-node@master
       with:
         node-version: '12'
       env:
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+
     - name: npm install, test JS standard and  build test app
       run: |
         npm install
@@ -20,9 +26,18 @@ jobs:
         npm run build
       env:
         CI: true
+
     - name: Test Code
       uses: mujo-code/puppeteer-headful@master
       env:
         CI: 'true'
       with:
         args: npm test
+
+    - name: Save logs as artifact
+      if: ${{ failure() }} # Perform this step if some error happened
+      uses: actions/upload-artifact@v2
+      with:
+        name: logs
+        path: |
+          ./logs/*

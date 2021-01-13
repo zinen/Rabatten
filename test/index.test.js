@@ -105,6 +105,7 @@ async function delay (msSec) {
     })
     const extensionOptionsPage = await extensionOptionsPageTarget.page()
     const extensionOptionsURL = extensionOptionsPageTarget !== undefined ? extensionOptionsPageTarget.url() : undefined
+    await extensionOptionsPage.screenshot({ path: './logs/screenshot/test-options-page-new-install.jpg', type: 'jpeg' })
     assert(extensionOptionsURL !== undefined, 'Options page is not found')
     // Get values af check boxes
     const checkBoxValues = await extensionOptionsPage.$$eval('#check-list label', els => {
@@ -120,6 +121,7 @@ async function delay (msSec) {
     for await (const check of checkList) {
       await check.click()
     }
+    await extensionOptionsPage.screenshot({ path: './logs/screenshot/test-options-page-before-save.jpg', type: 'jpeg' })
     // Click save, this also should close the options page
     await extensionOptionsPage.click('#optionsSubmit')
     // Check 3 sites for expected content in the top panel
@@ -154,6 +156,9 @@ async function getTopPaneData (URL, browser) {
   await page.goto(URL, { waitUntil: 'networkidle2' })
   // Wait for 1 second to allow this extension to loops its data and show the top banner
   await page.waitFor(1000)
+  // Transform https://bauhaus.dk/ into bauhaus.dk via regex
+  const screenshotPath = './logs/screenshot/test-top-pane-of-' + URL.split(/\/\/(.*)\//)[1] + '.jpg'
+  await page.screenshot({ path: screenshotPath, type: 'jpeg' })
   const scrapedContent = await page.$$eval('body > div', divs => {
     for (const div of divs) {
       // Search to find the correct div

@@ -1,6 +1,23 @@
-node_modules/*
-tmp/*
-.vscode/*
-src/manifest.json
-build/*
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# Dependency directories
+node_modules
+
+# dotenv environment variables file
 .env
+.env.test
+
+# temp files
+tmp/*
+
+#vscode config files
+.vscode/*
+
+# build folder to store temp files before publish to chrome webstore
+build/*
