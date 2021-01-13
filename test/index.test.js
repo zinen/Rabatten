@@ -49,7 +49,7 @@ async function delay (msSec) {
     const pathToExtension = require('path').join(__dirname, '../build/')
     browser = await puppeteer.launch({
       executablePath: process.env.PUPPETEER_EXEC_PATH,
-      // headless: false, // default is true
+      headless: false, // to install extensions headless must be false
       args: [
         '--no-sandbox',
         `--disable-extensions-except=${pathToExtension}`,
@@ -142,7 +142,7 @@ async function delay (msSec) {
     process.exitCode = 1
   }
   try {
-    browser.close()
+    await browser.close()
   } catch (error) {
     console.log('---Warning2---')
     console.log(error)
@@ -152,7 +152,7 @@ async function delay (msSec) {
 async function getTopPaneData (URL, browser) {
   const page = await browser.newPage()
   await page.goto(URL, { waitUntil: 'networkidle2' })
-  // Wait for 1 second
+  // Wait for 1 second to allow this extension to loops its data and show the top banner
   await page.waitFor(1000)
   const scrapedContent = await page.$$eval('body > div', divs => {
     for (const div of divs) {
