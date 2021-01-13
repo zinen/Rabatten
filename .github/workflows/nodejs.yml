@@ -8,7 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Use Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@master
+      with:
+        node-version: '12'
       env:
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
     - name: npm install, test JS standard and  build test app
