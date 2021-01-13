@@ -42,13 +42,14 @@ async function delay (msSec) {
   Object.keys(DiscountServices).forEach((service) => {
     ArrayOfDatabaseURL.push(DiscountServices[service].databaseURL)
   })
-  console.log('ArrayOfDatabaseURL', ArrayOfDatabaseURL)
+  // console.log('ArrayOfDatabaseURL', ArrayOfDatabaseURL)
   await delay(1500)
+  let browser
   try {
     const pathToExtension = require('path').join(__dirname, '../build/')
-    const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
       executablePath: process.env.PUPPETEER_EXEC_PATH,
-      headless: false,
+      // headless: false, // default is true
       args: [
         '--no-sandbox',
         `--disable-extensions-except=${pathToExtension}`,
@@ -125,7 +126,7 @@ async function delay (msSec) {
     for await (const testObject of topPaneData) {
       const scrapedContent = await getTopPaneData(testObject.webpage, browser)
       // console.log('testObject', testObject)
-      // console.log('scrapedContent', scrapedContent)
+      console.log('scrapedContent', scrapedContent)
       if (testObject.expectedTextContent) {
         assert.strictEqual(scrapedContent.textContent, testObject.expectedTextContent, 'Text: Content of top pane is wrong')
       }
@@ -133,13 +134,19 @@ async function delay (msSec) {
       assert.strictEqual(scrapedContent.styleOffsetTop, 0, 'Style: Top offset of top pane is wrong')
       assert.strictEqual(scrapedContent.styleHeight, 28, 'Style: Height of top pane is wrong')
     }
-    console.log('\x1b[92mAll checks succeeded\x1b[39m')
-    await browser.close()
+    console.log('\x1b[92mAll checks succeeded. Closing browser now.\x1b[39m')
   } catch (error) {
-    console.log('---Error---')
+    console.log('---Error1---')
     console.log(error)
     console.log('-----------')
     process.exitCode = 1
+  }
+  try {
+    browser.close()
+  } catch (error) {
+    console.log('---Warning2---')
+    console.log(error)
+    console.log('-----------')
   }
 })()
 async function getTopPaneData (URL, browser) {
