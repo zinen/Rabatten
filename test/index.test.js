@@ -85,9 +85,9 @@ describe('test extension', function () {
   it('1: options page should show after first install', async function () {
     const extensionOptionsPageTarget = await browser.waitForTarget(target => target.url().includes('options.html'))
     const extensionOptionsURL = extensionOptionsPageTarget !== undefined ? extensionOptionsPageTarget.url() : undefined
+    assert(extensionOptionsURL !== undefined, '1: Options page is not found')
     const extensionOptionsPage = await extensionOptionsPageTarget.page()
     await extensionOptionsPage.screenshot({ path: './logs/screenshot/1-test-options-page-new-install.jpg', type: 'jpeg' })
-    assert(extensionOptionsURL !== undefined, '1: Options page is not found')
   })
 
   it('2: background page must be running', async function () {
