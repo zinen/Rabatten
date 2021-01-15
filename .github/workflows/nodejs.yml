@@ -23,7 +23,7 @@ jobs:
       env:
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
 
-    - name: npm install, test JS standard and  build test app
+    - name: npm install, lint JS standard and build test app
       run: |
         npm ci
         npm run lint --if-present
