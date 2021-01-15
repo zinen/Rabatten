@@ -112,6 +112,7 @@ async function getDiscounts () {
     for (const service of services) {
       window.fetch(DiscountServices[service].databaseURL)
         .then(response => response.json())
+        .catch(() => [])
         .then(input => {
           chrome.storage.local.set({ [DiscountServices[service].arrayName]: input }, function () {
             console.log('Data for: ' + service + ' is updated')
