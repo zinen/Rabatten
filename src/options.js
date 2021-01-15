@@ -1,11 +1,11 @@
 console.log('Options: script is running!')
 
 /**
- * Makess a checklist from content of array.
+ * Makes a checklist from content of array.
  */
 function formCreate () {
-  chrome.storage.sync.get('memberships', function (arraylist) {
-    const list = arraylist.memberships || []
+  chrome.storage.sync.get('memberships', function (arrayList) {
+    const list = arrayList.memberships || []
     const container = document.getElementById('check-list')
     for (const key in DiscountServices) {
       const newP = document.createElement('p')
@@ -19,10 +19,10 @@ function formCreate () {
       const newA = document.createElement('a')
       newA.href = DiscountServices[key].homepage
       newA.innerText = '[link]'
-      const newspan = document.createElement('span')
-      newspan.className = 'checkmark'
+      const newSpan = document.createElement('span')
+      newSpan.className = 'checkmark'
       newLabel.appendChild(checkbox)
-      newLabel.appendChild(newspan)
+      newLabel.appendChild(newSpan)
       newP.appendChild(newLabel)
       newP.appendChild(newA)
       container.appendChild(newP)
@@ -32,7 +32,7 @@ function formCreate () {
 formCreate()
 
 /**
- * Saves checked and uncheck values to syncronized storage.
+ * Saves checked and uncheck values to synchronized storage.
  */
 function formSave () {
   const checkboxes = document.getElementsByTagName('input')
@@ -48,31 +48,31 @@ function formSave () {
 }
 
 /**
- * Fills the textarea with data from syncronized storage.
+ * Fills the textarea with data from synchronized storage.
  */
 function textareaCreate () {
-  chrome.storage.sync.get('domainfilter', function (arraylist) {
-    const list = arraylist.domainfilter || []
+  chrome.storage.sync.get('domainfilter', function (arrayList) {
+    const list = arrayList.domainfilter || []
     document.getElementById('domainFilter').value = list.join(', ')
+    document.getElementById('domainFilter').value += ', '
   })
 }
 textareaCreate()
 
 /**
- * Saves the entered data textarea to syncronized storage.
+ * Saves the entered data textarea to synchronized storage.
  */
 function textareaSave () {
   let textarea = document.getElementById('domainFilter').value
-  textarea = textarea.replace(/[\n\r]/g, ',') // reaplace newline with comma
+  textarea = textarea.replace(/[\n\r]/g, ',') // replaced newline with comma
   textarea = textarea.split(',').map(s => s.trim()) // Split and trim array
   for (let i = textarea.length - 1; i >= 0; i--) {
     const dotCount = (textarea[i].match(/./g) || []).length
     if (dotCount === 0) {
       textarea.splice(i, 1)
       continue
-    }
-    if (dotCount > 1) {
-      textarea[i] = textarea[i].replace(/^\w+:?\/\/(?:www\.)?\.?([^/]+)\/?.*$/, '$1').split('.') // Rremoves www and everything after domian name
+    } else if (dotCount > 1) {
+      textarea[i] = textarea[i].replace(/^\w+:?\/\/(?:www\.)?\.?([^/]+)\/?.*$/, '$1').split('.') // Removes www and everything after domain name
       if (textarea[i][textarea[i].length - 1] === 'uk') {
         // Fix for uk domains, cant handel domain suffixes with only ".uk" but will handle domains like ".co.uk"
         textarea[i] = textarea[i].slice(-3).join('.')
