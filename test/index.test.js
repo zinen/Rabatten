@@ -49,7 +49,6 @@ let browser
 let DiscountServices
 let pathToExtension
 const ArrayOfDatabaseURL = []
-const temp = []
 
 before(async function () {
   pathToExtension = require('path').join(__dirname, '../build/')
@@ -76,9 +75,8 @@ beforeEach(async function () {
   })
 })
 
-afterEach(function () {
-  browser.close()
-  temp.length = 0
+afterEach(async function () {
+  await browser.close()
 })
 
 describe('test extension', function () {
