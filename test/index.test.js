@@ -21,7 +21,7 @@ async function getTopPaneData (URL, ID = '0') {
   const page = await browser.newPage()
   await page.goto(URL, { waitUntil: 'networkidle2' })
   // Wait for 1 second to allow this extension to loops its data and show the top pane
-  await page.waitFor(1000)
+  await delay(1000)
   // Transform URL to something approved by file system eg. https://bauhaus.dk/ into bauhaus.dk
   const screenshotPath = './logs/screenshot/' + ID + '-test-top-pane-of-' + URL.split(/\/\/(.*)\//)[1] + '.jpg'
   await page.screenshot({ path: screenshotPath, type: 'jpeg' })
@@ -75,11 +75,12 @@ beforeEach(async function () {
     ]
   })
   // Wait for extension to be fully loaded and running.
-  await delay(1500)
+  await delay(2500)
 })
 
 afterEach(async function () {
   await browser.close()
+  await delay(1000)
 })
 
 describe('test extension', function () {
