@@ -60,6 +60,7 @@ before(async function () {
 })
 
 beforeEach(async function () {
+  this.timeout(10000)
   browser = await puppeteer.launch({
     executablePath: process.env.PUPPETEER_EXEC_PATH,
     headless: false, // to install extensions headless must be false
@@ -73,6 +74,8 @@ beforeEach(async function () {
       '--user-agent=PuppeteerAgent'
     ]
   })
+  // Wait for extension to be fully loaded and running.
+  await delay(1500)
 })
 
 afterEach(async function () {
@@ -91,8 +94,6 @@ describe('test extension', function () {
   })
 
   it('2: background page must be running', async function () {
-    // Wait for extension to be fully loaded and running.
-    await delay(1500)
     const targets = await browser.targets()
     const extensionBackgroundPageTarget = targets.find(target => (target.type() === 'background_page' && target._targetInfo.title === 'Rabatten'))
     assert(await extensionBackgroundPageTarget !== undefined, '2; Background page is not found')
@@ -245,7 +246,7 @@ describe('test extension', function () {
     const extensionOptionsPageURL = await extensionOptionsPage.url()
     await extensionOptionsPage.type('#domainFilter', ',http://test.url/index.html')
     await extensionOptionsPage.$eval('#domainFilter', e => {
-      e.value = `,http://test.url/index.html, www.ebay.co.uk, shop.hear.com
+      e.value = `,http://test.url/index.html, www.web.co.uk, shop.hear.com
       newline.here`
     })
     await extensionOptionsPage.screenshot({ path: './logs/screenshot/5-test-options-bad-filter-before-save.jpg', type: 'jpeg' })
@@ -259,7 +260,7 @@ describe('test extension', function () {
     filterResult = filterResult.split(',').map(s => s.trim()) // Split and trim array
     await page.screenshot({ path: './logs/screenshot/5-test-options-bad-filter-after-save.jpg', type: 'jpeg' })
     // console.log('result', result)
-    const filterExpected = ['test.url', 'ebay.co.uk', 'hear.com', 'newline.here', '']
+    const filterExpected = ['test.url', 'web.co.uk', 'hear.com', 'newline.here', '']
     assert.deepStrictEqual(filterResult, filterExpected, '5: Text inside filter fields on settings page is not corrected as expected')
   })
 
