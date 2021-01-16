@@ -36,17 +36,16 @@
     "chrome-webstore-upload-cli": "^1.2.0",
     "clean-css-cli": "^4.3.0",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "mkdirp": "^0.5.5",
+    "mkdirp": "^1.0.4",
     "mocha": "^8.2.1",
     "ncp": "^2.0.0",
-    "rimraf": "^3.0.0",
-    "standard": "^14.3.1",
-    "terser": "^4.6.2"
+    "rimraf": "^3.0.2",
+    "standard": "^16.0.3",
+    "terser": "^5.5.1"
   },
   "optionalDependencies": {
-    "puppeteer": "^2.0.0",
-    "rewire": "^4.0.1"
+    "puppeteer": "^5.5.0",
+    "rewire": "^5.0.0"
   },
   "standard": {
     "globals": [
