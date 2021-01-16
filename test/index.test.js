@@ -79,6 +79,7 @@ beforeEach(async function () {
 })
 
 afterEach(async function () {
+  this.timeout(10000)
   await browser.close()
   await delay(1000)
 })
@@ -204,17 +205,17 @@ describe('test extension', function () {
       {
         // Test for service 1
         webpage: 'https://bauhaus.dk/',
-        expectedTextContent: 'testData1-1 har 101 % igennem forbrugsforeningenX'
+        expectedTextContent: 'testData1-1 har 101 % igennem ForbrugsforeningenX'
       },
       {
         // Test for service 2
         webpage: 'https://cewe.dk/',
-        expectedTextContent: 'testData2-5 har 105 % igennem logbuyX'
+        expectedTextContent: 'testData2-5 har 105 % igennem LogBuyX'
       },
       {
         // Test for multiple discounts
         webpage: 'https://www.ticketmaster.dk/',
-        expectedTextContent: 'ticketmaster.dk har flere tilbud igennem forbrugsforeningenX'
+        expectedTextContent: 'ticketmaster.dk har flere tilbud igennem ForbrugsforeningenX'
       },
       {
         // Test for top pane top offset 0
@@ -323,3 +324,6 @@ describe('test extension', function () {
     assert.strictEqual(scrapedContent, false, '6: Top pane should be missing but was found')
   })
 })
+// TODO: test for button to hide top banner
+// TODO: test for activating and then de-activating a service = should not show top banner
+// TODO: test upgrade of settings from different versions of data inside sync storages eg. from 1.1.2 to 1.2.0

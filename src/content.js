@@ -12,7 +12,7 @@ if (tabDomainName[tabDomainName.length - 1] === 'uk') {
 console.log('Content: domain name: ' + tabDomainName)
 
 /**
- * Get last URL, from which this discount banner was closed on, and store it.
+ * Get last URL, from which the top pane was closed on, and store it.
  */
 try {
   chrome.storage.local.get('rabatClosed', function (result) {
@@ -31,7 +31,7 @@ try {
  */
 chrome.storage.sync.get('memberships', function (membershipsArray) {
   const promises = []
-  // Loop membership and note them in a promise
+  // Loop memberships and note them in a promise
   for (const membership of membershipsArray.memberships || []) {
     promises.push(new Promise(resolve => {
       setTimeout(resolve, 2000)
@@ -40,7 +40,8 @@ chrome.storage.sync.get('memberships', function (membershipsArray) {
         const holder = []
         for (const item of list[arrayName]) {
           if (item[0] === tabDomainName) {
-            item.push(membership)
+            // Add name of service to record to be used as info in top pane
+            item.push(DiscountServices[membership].name)
             holder.push(item)
           }
         }
@@ -67,7 +68,7 @@ chrome.storage.sync.get('memberships', function (membershipsArray) {
  */
 function handelMatches (matchHolder) {
   if (!ignoreDomain.includes(tabDomainName)) {
-    console.log('Content: match holder info used')
+    console.log('Content: match holder info used', matchHolder)
     let text
     if (matchHolder.length > 1) {
       text = tabDomainName + ' har flere tilbud igennem ' + matchHolder[0][4]

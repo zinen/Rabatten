@@ -17,31 +17,34 @@ chrome.runtime.onInstalled.addListener(async function () {
       })
     })
   }
-  // Known data keys, and their default values
-  const knownSettings = {
+  const defaultSettings = {
     version: null, // Does nothing
-    memberships: '_options', // Special case, opens settings page
+    memberships: '_options', // '_options' = Special case, opens settings page
     domainfilter: ['facebook.com', 'google.com', 'forbrugsforeningen.dk'] // For compatibility for installs before v0.1.0
   }
   let optionsOpen = false
   const settings = await getStorageSync(null)
   const startSettings = Object.assign({}, settings)
-  for (const key in knownSettings) {
+  // Looping default settings to merge into stored settings
+  for (const key in defaultSettings) {
     if (!Object.prototype.hasOwnProperty.call(settings, key)) {
-      if (knownSettings[key] === null) {
+      if (defaultSettings[key] === null) {
         continue
-      } else if (knownSettings[key].slice(0, 1) === '_') {
-        if (knownSettings[key] === '_options') {
+      } else if (defaultSettings[key].slice(0, 1) === '_') {
+        if (defaultSettings[key] === '_options') {
           optionsOpen = true
         } else {
           console.error('Special case, unknown')
         }
       } else {
         console.log('Data: ' + key + ' is missing from settings, added now')
-        settings[key] = knownSettings[key]
+        settings[key] = defaultSettings[key]
       }
     }
   }
+  // New settings available in this version and so options page will be shown
+  if (settings.version !== '1.2.0') { optionsOpen = true }
+  // Compare existing settings with merged-default settings
   if (JSON.stringify(settings) !== JSON.stringify(startSettings)) {
     console.log('Creating settings now')
     for (const key in settings) {
@@ -52,8 +55,8 @@ chrome.runtime.onInstalled.addListener(async function () {
     const optionsUrl = chrome.extension.getURL('/options.html')
     chrome.tabs.create({ url: optionsUrl })
   } else {
-    // If all settings is okay, without need for manual updating denied options
-    // then get updated list of memberships
+    // If all settings is okay without need for manual updating any options
+    // then get updated list of memberships' data
     getDiscounts()
   }
 })
