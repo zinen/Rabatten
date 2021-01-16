@@ -19,5 +19,11 @@ const DiscountServices = { // eslint-disable-line no-unused-vars
     arrayName: 'array_coop',
     databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/coop.json',
     homepage: 'https://partnerfordele.coop.dk/'
+  },
+  aeld: {
+    name: 'Ældre Sagen',
+    arrayName: 'array_aeld',
+    databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/aeld.json',
+    homepage: 'https://www.aeldresagen.dk/'
   }
 }
