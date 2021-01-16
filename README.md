@@ -3,7 +3,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![DeepScan grade](https://deepscan.io/api/teams/5999/projects/7865/branches/86176/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5999&pid=7865&bid=86176)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7f37cac1b78f385627d2/maintainability)](https://codeclimate.com/github/zinen/Rabatten/maintainability)
-[![devDependencies Status](https://img.shields.io/david/dev/zinen/Rabatten)](https://david-dm.org/zinen/rabatten?type=dev)
+[![devDependencies Status](https://status.david-dm.org/gh/zinen/rabatten.svg?type=dev)](https://david-dm.org/zinen/rabatten?type=dev)
 [![BCH compliance](https://bettercodehub.com/edge/badge/zinen/Rabatten?branch=master)](https://bettercodehub.com/results/zinen/Rabatten)
 ![Node build and test](https://github.com/zinen/Rabatten/workflows/Node%20build%20and%20test/badge.svg)
 
