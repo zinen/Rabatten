@@ -1,4 +1,4 @@
-# Rabatten
+# Rabatten - a chrome extension
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![DeepScan grade](https://deepscan.io/api/teams/5999/projects/7865/branches/86176/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5999&pid=7865&bid=86176)
@@ -21,7 +21,7 @@ Some of the terminology require knowledge of [the workings of a browser extensio
 
 ### Options page
 
-In the options page, you define which services you want to see your discounts from. And you can specify filters on domains you don’t want to see the discount banner on.
+In the options page, you define which services you want to see your discounts from. And you can specify filters on domains you don’t want to see the discount top pane on.
 Options are saved in chrome synchronized storage and thus made available to your other installations. 
 *This requires a google account being logged in to chrome otherwise options are only saved localy.*
 
@@ -33,7 +33,7 @@ The background page also enables the content script to send data to popup page.
 
 ### Content script
 
-The content script will fire on each site you visit, looking for a match between the site and your activated services. It is fired only at `document_end` meaning it will be the lasts priority to load on each site. Once a match is found the match is made visible to the user via a top banner on the sites content. The data of the match is also shared with background page, to be used later for the popup page.
+The content script will fire on each site you visit, looking for a match between the site and your activated services. It is fired only at `document_end` meaning it will be the lasts priority to load on each site. Once a match is found the match is made visible to the user via a top pane on the sites content. The data of the match is also shared with background page, to be used later for the popup page.
 
 ### Popup page
 
