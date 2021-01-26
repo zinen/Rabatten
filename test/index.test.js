@@ -142,7 +142,7 @@ describe('test extension', function () {
     assert.deepStrictEqual(ArrayOfURLRequests, ArrayOfDatabaseURL, '3: Fetching discount database didn\'t return as expected')
   })
 
-  it('4: test top pane on some sites', async function () {
+  it('4: test top pane on some sites with aggressive css', async function () {
     this.timeout(60000)
     const extensionOptionsPageTarget = await browser.waitForTarget(target => target.url().includes('options.html'))
     const targets = await browser.targets()
@@ -322,6 +322,92 @@ describe('test extension', function () {
       return false
     })
     assert.strictEqual(scrapedContent, false, '6: Top pane should be missing but was found')
+  })
+
+  it('7: test hide button on top pane', async function () {
+    this.timeout(20000)
+    const extensionOptionsPageTarget = await browser.waitForTarget(target => target.url().includes('options.html'))
+    const targets = await browser.targets()
+    // Search for background page
+    const extensionBackgroundPageTarget = targets.find(target => (target.type() === 'background_page' && target._targetInfo.title === 'Rabatten'))
+    const extensionBackgroundPage = await extensionBackgroundPageTarget.page()
+    await extensionBackgroundPage.setRequestInterception(true)
+    const ArrayOfURLRequests = []
+    // Inject controlled data from external resource
+    extensionBackgroundPage.on('request', request => {
+      if (request._url === DiscountServices.forbrugsforeningen.databaseURL) {
+        // Make fake data for forbrugsforeningen
+        request.respond({
+          status: 200,
+          contentType: 'text/plain',
+          body: `[
+                ["bauhaus.dk", "testData1-1", "101 %", "http://www.home.page"]
+              ]`
+        })
+        ArrayOfURLRequests.push(request._url)
+      } else if (ArrayOfDatabaseURL.includes(request._url)) {
+        request.abort()
+        ArrayOfURLRequests.push(request._url)
+      } else {
+        request.continue()
+        ArrayOfURLRequests.push(request._url)
+      }
+    })
+    const extensionOptionsPage = await extensionOptionsPageTarget.page()
+    // Check all the checkboxes
+    const checkList = await extensionOptionsPage.$$('#check-list label')
+    for await (const check of checkList) {
+      await check.click()
+    }
+    await extensionOptionsPage.click('#optionsSubmit')
+    // Wait for save to handel its web requests
+    await delay(500)
+    // Check site for no top pane
+    const URL = 'http://bauhaus.dk'
+    const page = await browser.newPage()
+    await page.goto(URL, { waitUntil: 'networkidle2' })
+    await page.screenshot({ path: './logs/screenshot/7-test-hide-top-pane-before.jpg', type: 'jpeg' })
+    // # TODO here
+    let scrapedContent = await page.$$eval('body > div', divs => {
+      for (const div of divs) {
+        // Search to find the correct div
+        if (div.shadowRoot && div.shadowRoot.querySelector('#aso12909')) {
+          // Click the hide button
+          div.shadowRoot.querySelector('#aso12909 button').click()
+          return true
+        }
+      }
+      // If div is not found return false
+      return false
+    })
+    assert.strictEqual(scrapedContent, true, '7: Top pane was not found at first browse to site')
+    await page.screenshot({ path: './logs/screenshot/7-test-hide-top-pane-after-click.jpg', type: 'jpeg' })
+    scrapedContent = await page.$$eval('body > div', divs => {
+      for (const div of divs) {
+        // Search to find the correct div
+        if (div.shadowRoot && div.shadowRoot.querySelector('#aso12909')) {
+          // Click the hide button
+          return true
+        }
+      }
+      // If div is not found return false
+      return false
+    })
+    assert.strictEqual(scrapedContent, false, '7: Top pane was not removed after clicking hide')
+    await page.goto(URL, { waitUntil: 'networkidle2' })
+    await page.screenshot({ path: './logs/screenshot/7-test-hide-top-pane-reenter-site.jpg', type: 'jpeg' })
+    scrapedContent = await page.$$eval('body > div', divs => {
+      for (const div of divs) {
+        // Search to find the correct div
+        if (div.shadowRoot && div.shadowRoot.querySelector('#aso12909')) {
+          // Click the hide button
+          return true
+        }
+      }
+      // If div is not found return false
+      return false
+    })
+    assert.strictEqual(scrapedContent, false, '7: Top pane found when returning to page second time even after it was hidden')
   })
 })
 // TODO: test for button to hide top banner
