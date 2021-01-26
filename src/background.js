@@ -42,8 +42,8 @@ chrome.runtime.onInstalled.addListener(async function () {
       }
     }
   }
-  // New settings available in this version and so options page will be shown
-  if (settings.version !== '1.2.0') { optionsOpen = true }
+  // New settings available in this version? and so options page will be shown
+  // if (settings.version !== '1.2.0') { optionsOpen = true }
   // Compare existing settings with merged-default settings
   if (JSON.stringify(settings) !== JSON.stringify(startSettings)) {
     console.log('Creating settings now')

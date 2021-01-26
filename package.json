@@ -1,6 +1,6 @@
 {
   "name": "rabatten",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Start med at vælge de sider du får rabat gennem. Herefter ser du en besked i toppen af hjemmesiderne med info omkring gældende rabat på netop denne hjemmeside.",
   "private": true,
   "browser": "background.js",
