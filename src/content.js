@@ -15,7 +15,7 @@ console.log('Content: domain name: ' + tabDomainName)
  * Get last URL, from which the top pane was closed on, and store it.
  */
 try {
-  chrome.storage.local.get('rabatClosed', function (result) {
+  chrome.storage.local.get('rabat_closed', function (result) {
     chrome.storage.sync.get('domainfilter', function (arrayList) {
       ignoreDomain = arrayList.domainfilter || []
       ignoreDomain.push(result.rabat_closed)
