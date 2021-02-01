@@ -1,8 +1,10 @@
+
+Content of data fields published to Chrome Web Store
+
+Store link: https://chrome.google.com/webstore/detail/rabatten/ekaaoiehoehhfffifhgclflhjjkppdnc
+
+Languages found below:
 # Danish [ISO 639-1 = da]
-Content of data fields published to chrome webstore 
-
-https://chrome.google.com/webstore/detail/rabatten/ekaaoiehoehhfffifhgclflhjjkppdnc
-
 ## Titel (fra manifest)
 
 Rabatten

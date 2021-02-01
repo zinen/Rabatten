@@ -1,4 +1,4 @@
-# Rabatten - a chrome extension
+# Rabatten - A Chromium extension
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![DeepScan grade](https://deepscan.io/api/teams/5999/projects/7865/branches/86176/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5999&pid=7865&bid=86176)
@@ -13,7 +13,9 @@ Start med at vælge de sider du får rabat gennem. Herefter ser du en besked i t
 
 For mere info, klik på ikonet øverst i højre hjørne når en blå indikator viser at der er rabat på siden.
 
-[Available in the chrome webshop](https://chrome.google.com/webstore/detail/rabatten/ekaaoiehoehhfffifhgclflhjjkppdnc/).
+[Available at the Chrome Web Store](https://chrome.google.com/webstore/detail/rabatten/ekaaoiehoehhfffifhgclflhjjkppdnc/).
+
+[Available at Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/lmllmkiljoibjomgpofgaaccfcllebgf/).
 
 ## How the extension works
 
