@@ -1,5 +1,5 @@
+import { DiscountServices } from './common.js'
 console.log('service_worker: script is running!')
-import { DiscountServices } from "./common.js";
 
 /**
  * Runs on installation in the browser.

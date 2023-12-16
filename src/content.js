@@ -1,5 +1,5 @@
+import { DiscountServices } from './common.js'
 console.log('Content: script is running!')
-import { DiscountServices } from "./common.js";
 let ignoreDomain
 
 let tabDomainName = document.domain.split('.')
