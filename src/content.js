@@ -1,4 +1,5 @@
 console.log('Content: script is running!')
+import { DiscountServices } from "./common.js";
 let ignoreDomain
 
 let tabDomainName = document.domain.split('.')
@@ -53,7 +54,7 @@ chrome.storage.sync.get('memberships', function (membershipsArray) {
     // Flatten returned array from promises
     matches = matches.reduce((flatten, arr) => [...flatten, ...arr], [])
     if (matches.length > 0) {
-      // Notify the background script of a match
+      // Notify the service_worker script of a match
       chrome.runtime.sendMessage({ rabatMatch: true, matchHolder: matches })
       handelMatches(matches)
     }

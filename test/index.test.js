@@ -95,7 +95,7 @@ describe('test extension', function () {
     await extensionOptionsPage.screenshot({ path: './logs/screenshot/1-test-options-page-new-install.jpg', type: 'jpeg' })
   })
 
-  it('2: background page must be running', async function () {
+  it('2: service_worker page must be running', async function () {
     const targets = await browser.targets()
     const extensionBackgroundPageTarget = targets.find(target => (target.type() === 'background_page' && target._targetInfo.title === 'Rabatten'))
     assert(await extensionBackgroundPageTarget !== undefined, '2; Background page is not found')
@@ -104,7 +104,7 @@ describe('test extension', function () {
   it('3: options page check all check boxes and saving should start background page fetching data', async function () {
     const extensionOptionsPageTarget = await browser.waitForTarget(target => target.url().includes('options.html'))
     const targets = await browser.targets()
-    // Search for background page
+    // Search for service_worker page
     const extensionBackgroundPageTarget = targets.find(target => (target.type() === 'background_page' && target._targetInfo.title === 'Rabatten'))
     const extensionBackgroundPage = await extensionBackgroundPageTarget.page()
     await extensionBackgroundPage.setRequestInterception(true)
@@ -146,7 +146,7 @@ describe('test extension', function () {
     this.timeout(60000)
     const extensionOptionsPageTarget = await browser.waitForTarget(target => target.url().includes('options.html'))
     const targets = await browser.targets()
-    // Search for background page
+    // Search for service_worker page
     const extensionBackgroundPageTarget = targets.find(target => (target.type() === 'background_page' && target._targetInfo.title === 'Rabatten'))
     const extensionBackgroundPage = await extensionBackgroundPageTarget.page()
     await extensionBackgroundPage.setRequestInterception(true)
@@ -270,7 +270,7 @@ describe('test extension', function () {
     this.timeout(20000)
     const extensionOptionsPageTarget = await browser.waitForTarget(target => target.url().includes('options.html'))
     const targets = await browser.targets()
-    // Search for background page
+    // Search for service_worker page
     const extensionBackgroundPageTarget = targets.find(target => (target.type() === 'background_page' && target._targetInfo.title === 'Rabatten'))
     const extensionBackgroundPage = await extensionBackgroundPageTarget.page()
     await extensionBackgroundPage.setRequestInterception(true)
@@ -328,7 +328,7 @@ describe('test extension', function () {
     this.timeout(20000)
     const extensionOptionsPageTarget = await browser.waitForTarget(target => target.url().includes('options.html'))
     const targets = await browser.targets()
-    // Search for background page
+    // Search for service_worker page
     const extensionBackgroundPageTarget = targets.find(target => (target.type() === 'background_page' && target._targetInfo.title === 'Rabatten'))
     const extensionBackgroundPage = await extensionBackgroundPageTarget.page()
     await extensionBackgroundPage.setRequestInterception(true)
