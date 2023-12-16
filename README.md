@@ -27,16 +27,16 @@ In the options page, you define which services you want to see your discounts fr
 Options are saved in chrome synchronized storage and thus made available to your other installations. 
 *This requires a google account being logged in to chrome otherwise options are only saved localy.*
 
-### Background page
+### service_worker page
 
-The background page is activated when new options are saved or when the browser starts. Once triggered, it will download the database with discounts for the services chosen on options page. The database of the discount is found [here at another git repo](https://github.com/zinen/rabatten-scraper#readme).
+The service_worker page is activated when new options are saved or when the browser starts. Once triggered, it will download the database with discounts for the services chosen on options page. The database of the discount is found [here at another git repo](https://github.com/zinen/rabatten-scraper#readme).
 
-The background page also enables the content script to send data to popup page.
+The service_worker page also enables the content script to send data to popup page.
 
 ### Content script
 
-The content script will fire on each site you visit, looking for a match between the site and your activated services. It is fired only at `document_end` meaning it will be the lasts priority to load on each site. Once a match is found the match is made visible to the user via a top pane on the sites content. The data of the match is also shared with background page, to be used later for the popup page.
+The content script will fire on each site you visit, looking for a match between the site and your activated services. It is fired only at `document_end` meaning it will be the lasts priority to load on each site. Once a match is found the match is made visible to the user via a top pane on the sites content. The data of the match is also shared with service_worker page, to be used later for the popup page.
 
 ### Popup page
 
-The popup page starts by asking the background if a match is stored for the current active tab. If a match is returned it will populate the popup page with found match or matches if multiple is found.
+The popup page starts by asking the service_worker if a match is stored for the current active tab. If a match is returned it will populate the popup page with found match or matches if multiple is found.

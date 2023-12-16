@@ -1,4 +1,35 @@
-console.log('Background: script is running!')
+console.log('service_worker: script is running!')
+
+/**
+ * Common shared data
+ */
+const DiscountServices = { // eslint-disable-line no-unused-vars
+  forbrugsforeningen: {
+    name: 'Forbrugsforeningen',
+    arrayName: 'array_forbrugsforeningen',
+    databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/forbrugsforeningen.json',
+    homepage: 'http://forbrugsforeningen.dk'
+  },
+  logbuy: {
+    name: 'LogBuy',
+    arrayName: 'array_logbuy',
+    databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/logbuy.json',
+    homepage: 'http://logbuy.com'
+  },
+  coop: {
+    name: 'Coop partnerfordele',
+    arrayName: 'array_coop',
+    databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/coop.json',
+    homepage: 'https://partnerfordele.coop.dk/'
+  },
+  aeld: {
+    name: 'Ældre Sagen',
+    arrayName: 'array_aeld',
+    databaseURL: 'https://cdn.jsdelivr.net/gh/zinen/rabatten-scraper@latest/dist/aeld.json',
+    homepage: 'https://www.aeldresagen.dk/'
+  }
+}
+
 /**
  * Runs on installation in the browser.
  */
@@ -52,7 +83,7 @@ chrome.runtime.onInstalled.addListener(async function () {
     }
   }
   if (optionsOpen) {
-    const optionsUrl = chrome.extension.getURL('/options.html')
+    const optionsUrl = chrome.runtime.getURL('/options.html')
     chrome.tabs.create({ url: optionsUrl })
   } else {
     // If all settings is okay without need for manual updating any options
@@ -75,12 +106,12 @@ chrome.runtime.onStartup.addListener(function () {
  * Handling of incoming messages from content and popup script.
  */
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  // Handles any incoming messages between background, content, popup and options
+  // Handles any incoming messages between service_worker, content, popup and options
   // Response with needed data
   if (message.matchHolder) {
     // Used to receive message from content about a page match
     console.log('Badge text set!')
-    chrome.browserAction.setBadgeText({ text: '!', tabId: sender.tab.id })
+    chrome.action.setBadgeText({ text: '!', tabId: sender.tab.id })
     chrome.storage.local.get('matchHolder', function (content) {
       const matchHolder = content.matchHolder || {}
       // Only store a fixed amount of data, and delete first if more data is needed
@@ -113,7 +144,7 @@ async function getDiscounts () {
   chrome.storage.sync.get('memberships', function (items) {
     const services = items.memberships || []
     for (const service of services) {
-      window.fetch(DiscountServices[service].databaseURL)
+      fetch(DiscountServices[service].databaseURL)
         .then(response => response.json())
         .catch(() => [])
         .then(input => {
@@ -126,4 +157,4 @@ async function getDiscounts () {
   })
 }
 
-console.log('Background: script end.')
+console.log('service_worker: script end.')

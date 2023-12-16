@@ -1,22 +1,19 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Rabatten",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Rabat husker, et hurtigt klik og du kan se om du kan få rabat på siden",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "browser_action": {
-    "default_popup": "/popup.html"
+  "action": {
+    "default_popup": "popup.html"
   },
   "background": {
-    "scripts": [
-      "common.js",
-      "background.js"
-    ],
-    "persistent": false
+    "service_worker": "service_worker.js",
+    "type": "module"
   },
   "content_scripts": [
     {
@@ -25,8 +22,8 @@
       ],
       "run_at": "document_end",
       "js": [
-        "common.js",
-        "content.js"
+        "content.js",
+        "common.js"
       ]
     }
   ],
@@ -38,6 +35,13 @@
     "declarativeContent"
   ],
   "web_accessible_resources": [
-    "icon48.png"
+    {
+      "resources": [
+        "icon48.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
   ]
 }

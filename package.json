@@ -1,24 +1,24 @@
 {
   "name": "rabatten",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Start med at vælge de sider du får rabat gennem. Herefter ser du en besked i toppen af hjemmesiderne med info omkring gældende rabat på netop denne hjemmeside.",
   "private": true,
-  "browser": "background.js",
+  "browser": "service_worker.js",
   "scripts": {
     "npm:reinstall": "npm uninstall --no-save && npm cache verify && npm install --no-optional && npm install rewire -O",
     "npm:global:puppeteer": "npm install puppeteer -g",
     "lint": "standard --fix src/**.js && standard --verbose src/**.js && cleancss --format beautify src/style.css -o src/style.css",
-    "uglify:background": "mkdirp build && terser src/background.js -m -c drop_console  -o build/background.js",
+    "uglify:service_worker": "mkdirp build && terser src/service_worker.js -m -c drop_console  -o build/service_worker.js",
     "uglify:common": "mkdirp build && terser src/common.js -m -c drop_console -o build/common.js",
     "uglify:content": "mkdirp build && terser src/content.js -m -c drop_console  -o build/content.js",
     "uglify:options": "mkdirp build && terser src/options.js -m -c drop_console  -o build/options.js",
     "uglify:popup": "mkdirp build && terser src/popup.js -m -c drop_console  -o build/popup.js",
     "uglify:css": "cleancss src/style.css -o build/style.css",
-    "uglify:all": "npm run uglify:background && npm run uglify:common && npm run uglify:content && npm run uglify:options && npm run uglify:popup && npm run uglify:css",
+    "uglify:all": "npm run uglify:service_worker && npm run uglify:common && npm run uglify:content && npm run uglify:options && npm run uglify:popup && npm run uglify:css",
     "copy:all": "ncp src/ build/",
     "utils:version": "node utils/manifest-version.js",
     "build": "rimraf build/ && npm run utils:version && npm run copy:all && npm run uglify:all",
-    "upload:chrome": "node -r dotenv/config.js ./node_modules/chrome-webstore-upload-cli/index.js upload --source ./build",
+    "upload:chrome": "node --require dotenv/config.js ./node_modules/chrome-webstore-upload-cli/index.js upload --source ./build",
     "test": "node ./node_modules/mocha/bin/mocha"
   },
   "repository": {
@@ -35,7 +35,7 @@
   "devDependencies": {
     "chrome-webstore-upload-cli": "^1.2.0",
     "clean-css-cli": "^4.3.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.3.1",
     "mkdirp": "^1.0.4",
     "mocha": "^8.2.1",
     "ncp": "^2.0.0",
@@ -50,7 +50,8 @@
   "standard": {
     "globals": [
       "DiscountServices",
-      "chrome"
+      "chrome",
+      "fetch"
     ],
     "ignore": [
       "node_modules/**"
