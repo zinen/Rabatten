@@ -18,7 +18,7 @@
     "copy:all": "ncp src/ build/",
     "utils:version": "node utils/manifest-version.js",
     "build": "rimraf build/ && npm run utils:version && npm run copy:all && npm run uglify:all",
-    "upload:chrome": "node -r dotenv/config.js ./node_modules/chrome-webstore-upload-cli/index.js upload --source ./build",
+    "upload:chrome": "node --require dotenv/config.js ./node_modules/chrome-webstore-upload-cli/index.js upload --source ./build",
     "test": "node ./node_modules/mocha/bin/mocha"
   },
   "repository": {
@@ -35,7 +35,7 @@
   "devDependencies": {
     "chrome-webstore-upload-cli": "^1.2.0",
     "clean-css-cli": "^4.3.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.3.1",
     "mkdirp": "^1.0.4",
     "mocha": "^8.2.1",
     "ncp": "^2.0.0",
