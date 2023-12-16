@@ -22,7 +22,8 @@
       ],
       "run_at": "document_end",
       "js": [
-        "content.js"
+        "content.js",
+        "common.js"
       ]
     }
   ],
