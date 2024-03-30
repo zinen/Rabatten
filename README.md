@@ -13,7 +13,7 @@ Start med at vælge de sider du får rabat gennem. Herefter ser du en besked i t
 
 For mere info, klik på ikonet øverst i højre hjørne når en blå indikator viser at der er rabat på siden.
 
-[Available at the Chrome Web Store](https://chrome.google.com/webstore/detail/rabatten/ekaaoiehoehhfffifhgclflhjjkppdnc/).
+[Available at the Chrome Web Store](https://chromewebstore.google.com/detail/rabatten/ekaaoiehoehhfffifhgclflhjjkppdnc).
 
 [Available at Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/lmllmkiljoibjomgpofgaaccfcllebgf/).
 
